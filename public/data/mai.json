@@ -270,8 +270,8 @@
   },
   "audio": {
     "floatingLabel": "मांगलिक संगीत",
-    "maithiliBtn": "मैथिली गीत",
-    "assameseBtn": "इंद्रधनु (असमिया)",
+    "maithiliBtn": "मैथिली",
+    "assameseBtn": "असमिया",
     "playing": "बजि रहल अछि"
   },
   "footer": {

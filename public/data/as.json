@@ -270,8 +270,8 @@
   },
   "audio": {
     "floatingLabel": "মাংগলিক সংগীত",
-    "maithiliBtn": "মৈথিলী গান",
-    "assameseBtn": "ইন্দ্ৰধনু (অসমীয়া)",
+    "maithiliBtn": "মৈথিলী",
+    "assameseBtn": "অসমীয়া",
     "playing": "বাজি থকা গীত"
   },
   "footer": {

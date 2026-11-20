@@ -9,7 +9,7 @@ class SoundscapeEngine {
     this.ctx = null;
     this.ambientGain = null;
     this.isPlayingAmbient = false;
-    this.currentTrack = 'mai'; // 'mai' (Maithili) or 'as' (Assamese)
+    this.currentTrack = 'as'; // Default song is Assamese ("Indradhanu") as requested
     this.isMuted = false;
     this.isPlayingMusic = false;
     this.ytPlayer = null;
@@ -404,20 +404,26 @@ class SoundscapeEngine {
     const targetVideo = this.tracks[trackKey];
     const startSec = targetVideo.startSeconds || 0;
 
-    if (this.ytPlayer && typeof this.ytPlayer.loadVideoById === 'function') {
+    if (this.ytPlayer) {
       try {
-        this.ytPlayer.loadVideoById({
-          videoId: targetVideo.id,
-          startSeconds: startSec,
-          suggestedQuality: 'small'
-        });
-        if (startSec > 0) {
-          setTimeout(() => {
-            try { this.ytPlayer.seekTo(startSec, true); } catch(e) {}
-          }, 200);
-        }
-        if (this.isPlayingMusic) {
+        if (this.isPlayingMusic && typeof this.ytPlayer.loadVideoById === 'function') {
+          this.ytPlayer.loadVideoById({
+            videoId: targetVideo.id,
+            startSeconds: startSec,
+            suggestedQuality: 'small'
+          });
+          if (startSec > 0) {
+            setTimeout(() => {
+              try { this.ytPlayer.seekTo(startSec, true); } catch(e) {}
+            }, 200);
+          }
           this.ytPlayer.playVideo();
+        } else if (typeof this.ytPlayer.cueVideoById === 'function') {
+          this.ytPlayer.cueVideoById({
+            videoId: targetVideo.id,
+            startSeconds: startSec,
+            suggestedQuality: 'small'
+          });
         }
       } catch (e) {
         console.warn('Switching track error:', e);
@@ -426,12 +432,14 @@ class SoundscapeEngine {
     this.updateUI();
   }
 
-  // Hooked to language switcher: if lang is 'as', switch to Assamese song; if 'mai', switch to Maithili!
+  // Hooked to language switcher: if lang is 'as', switch to Assamese song; if 'mai', switch to Maithili; if 'en', default to Assamese
   syncWithLanguage(lang) {
     if (lang === 'as' && this.currentTrack !== 'as') {
       this.switchTrack('as');
     } else if (lang === 'mai' && this.currentTrack !== 'mai') {
       this.switchTrack('mai');
+    } else if (lang === 'en' && this.currentTrack !== 'as') {
+      this.switchTrack('as');
     }
   }
 

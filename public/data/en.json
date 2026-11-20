@@ -270,8 +270,8 @@
   },
   "audio": {
     "floatingLabel": "Wedding Soundscape",
-    "maithiliBtn": "Maithili Song",
-    "assameseBtn": "Indradhanu (Assamese)",
+    "maithiliBtn": "Maithili",
+    "assameseBtn": "Assamese",
     "playing": "Now Playing"
   },
   "footer": {

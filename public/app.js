@@ -238,6 +238,12 @@ class PooshuApp {
     // Footer
     this.setText('footer-blessing', t.footer.blessings);
     this.setText('footer-credits', t.footer.withLove);
+
+    // Audio Controller Track Tabs
+    if (t.audio) {
+      this.setText('track-as-label', t.audio.assameseBtn || 'Assamese');
+      this.setText('track-mai-label', t.audio.maithiliBtn || 'Maithili');
+    }
   }
 
   setText(id, text) {
