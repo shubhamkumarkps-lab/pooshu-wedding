@@ -531,12 +531,12 @@
       <form id="admin-login-form">
         <div class="login-input-group">
           <label class="login-label" for="login-username">Admin User ID</label>
-          <input type="text" id="login-username" class="login-input" placeholder="Enter Login ID" autocomplete="username" required>
+          <input type="text" id="login-username" class="login-input" placeholder="Enter Login ID" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" required>
         </div>
 
         <div class="login-input-group">
           <label class="login-label" for="login-password">Password</label>
-          <input type="password" id="login-password" class="login-input" placeholder="Enter Password" autocomplete="current-password" required>
+          <input type="password" id="login-password" class="login-input" placeholder="Enter Password" autocomplete="current-password" autocorrect="off" spellcheck="false" required>
         </div>
 
         <button type="submit" class="btn-login-submit">Authenticate Access</button>
@@ -715,6 +715,7 @@
         try {
           const res = await fetch('/api/admin/login', {
             method: 'POST',
+            cache: 'no-store',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })
           });
@@ -729,9 +730,10 @@
             errorMsg.style.display = 'block';
           }
         } catch (err) {
-          // Client-side fallback check if local server offline
-          if (username === 'admin' && password === 'PooShu#2026!Royal') {
+          // Client-side fallback check if local server offline or network blip
+          if (username.toLowerCase() === 'admin' && password === 'PooShu#2026!Royal') {
             sessionStorage.setItem(AUTH_KEY, 'true');
+            errorMsg.style.display = 'none';
             showDashboard();
           } else {
             errorMsg.textContent = 'Authentication failed. Please verify credentials.';
@@ -746,11 +748,15 @@
         showLogin();
       });
 
-      // Fetch RSVPs
+      // Fetch RSVPs with cache-busting
       async function fetchRsvps() {
         try {
-          const res = await fetch('/api/rsvps');
-          rsvpsData = await res.json();
+          const res = await fetch('/api/rsvps?_t=' + Date.now(), {
+            cache: 'no-store',
+            headers: { 'Cache-Control': 'no-cache' }
+          });
+          const data = await res.json();
+          rsvpsData = Array.isArray(data) ? data : [];
           renderStats(rsvpsData);
           renderTable();
         } catch (e) {
@@ -779,7 +785,7 @@
           const isAttending = item.attending !== 'no';
           if (isAttending) {
             attending++;
-            totalGuests += parseInt(item.guestCount, 10) || 1;
+            totalGuests += parseInt(item.guestCount || item.guests, 10) || 1;
           } else {
             declined++;
           }
@@ -864,7 +870,7 @@
             <td style="font-weight: 600; color: #2D1016;">${item.name || 'Honored Guest'}</td>
             <td>${sideBadge}</td>
             <td>${attendBadge}</td>
-            <td><span class="guest-count-pill">${item.guestCount || 1}</span></td>
+            <td><span class="guest-count-pill">${item.guestCount || item.guests || 1}</span></td>
             <td><span class="song-pill">${item.djSong ? '🎵 ' + item.djSong : '—'}</span></td>
             <td>${dateStr}</td>
           `;

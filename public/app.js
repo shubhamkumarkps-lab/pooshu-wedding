@@ -737,12 +737,15 @@ END:VCALENDAR`;
       msg.textContent = `Honored ${name}, your RSVP (${attending === 'yes' ? 'Joyfully Attending' : 'Regretfully Declining'} with ${guestCount} guest(s)) has been registered with love. We eagerly await celebrating #pooshu with you!`;
     }
 
-    // Post to local server API
+    // Post to server API
     fetch('/api/rsvp', {
       method: 'POST',
+      cache: 'no-store',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, side, attending, guestCount, djSong, timestamp: new Date().toISOString() })
-    }).catch(e => console.log('RSVP stored locally:', e));
+    }).then(res => res.json())
+      .then(data => console.log('[RSVP Success]:', data))
+      .catch(e => console.log('[RSVP Notice]:', e));
   }
 }
 

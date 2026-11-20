@@ -58,11 +58,19 @@ const MIME_TYPES = {
 const server = http.createServer((req, res) => {
   const reqUrl = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
   let pathname = reqUrl.pathname;
+  const normalizedPath = (pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname).toLowerCase();
 
   // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  // Prevent caching on dynamic API endpoints
+  if (normalizedPath.startsWith('/api/')) {
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+  }
 
   if (req.method === 'OPTIONS') {
     res.writeHead(204);
@@ -71,7 +79,7 @@ const server = http.createServer((req, res) => {
   }
 
   // API Endpoint: RSVP Submission (Appends to JSON and accounts into Excel & CSV)
-  if (pathname === '/api/rsvp' && req.method === 'POST') {
+  if (normalizedPath === '/api/rsvp' && req.method === 'POST') {
     let body = '';
     req.on('data', chunk => { body += chunk; });
     req.on('end', () => {
@@ -95,7 +103,7 @@ const server = http.createServer((req, res) => {
   }
 
   // API Endpoint: Get All RSVPs JSON
-  if (pathname === '/api/rsvps' && req.method === 'GET') {
+  if (normalizedPath === '/api/rsvps' && req.method === 'GET') {
     try {
       const data = fs.readFileSync(RSVP_FILE, 'utf-8');
       res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -108,7 +116,7 @@ const server = http.createServer((req, res) => {
   }
 
   // API Endpoint: Download Excel Spreadsheet (.xlsx)
-  if ((pathname === '/api/rsvps/download-excel' || pathname === '/api/rsvps/export.xlsx') && req.method === 'GET') {
+  if ((normalizedPath === '/api/rsvps/download-excel' || normalizedPath === '/api/rsvps/export.xlsx') && (req.method === 'GET' || req.method === 'HEAD')) {
     try {
       syncSpreadsheets();
       const fileContent = fs.readFileSync(RSVP_XLSX_FILE);
@@ -117,7 +125,11 @@ const server = http.createServer((req, res) => {
         'Content-Disposition': 'attachment; filename="pooshu_wedding_rsvps.xlsx"',
         'Content-Length': fileContent.length
       });
-      res.end(fileContent);
+      if (req.method === 'HEAD') {
+        res.end();
+      } else {
+        res.end(fileContent);
+      }
     } catch (e) {
       res.writeHead(500, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: 'Failed to generate Excel file: ' + e.message }));
@@ -126,7 +138,7 @@ const server = http.createServer((req, res) => {
   }
 
   // API Endpoint: Download CSV Spreadsheet (.csv)
-  if ((pathname === '/api/rsvps/download-csv' || pathname === '/api/rsvps/export.csv') && req.method === 'GET') {
+  if ((normalizedPath === '/api/rsvps/download-csv' || normalizedPath === '/api/rsvps/export.csv') && (req.method === 'GET' || req.method === 'HEAD')) {
     try {
       syncSpreadsheets();
       const fileContent = fs.readFileSync(RSVP_CSV_FILE);
@@ -135,7 +147,11 @@ const server = http.createServer((req, res) => {
         'Content-Disposition': 'attachment; filename="pooshu_wedding_rsvps.csv"',
         'Content-Length': Buffer.byteLength(fileContent)
       });
-      res.end(fileContent);
+      if (req.method === 'HEAD') {
+        res.end();
+      } else {
+        res.end(fileContent);
+      }
     } catch (e) {
       res.writeHead(500, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: 'Failed to generate CSV file: ' + e.message }));
@@ -144,13 +160,18 @@ const server = http.createServer((req, res) => {
   }
 
   // API Endpoint: Admin Login Authentication
-  if (pathname === '/api/admin/login' && req.method === 'POST') {
+  if (normalizedPath === '/api/admin/login' && req.method === 'POST') {
     let body = '';
     req.on('data', chunk => { body += chunk; });
     req.on('end', () => {
       try {
         const { username, password } = JSON.parse(body || '{}');
-        if (username === ADMIN_USER && password === ADMIN_PASS) {
+        const cleanUser = String(username || '').trim().toLowerCase();
+        const cleanAdmin = String(ADMIN_USER).trim().toLowerCase();
+        const cleanPass = String(password || '').trim();
+        const expectedPass = String(ADMIN_PASS).trim();
+
+        if (cleanUser === cleanAdmin && cleanPass === expectedPass) {
           res.writeHead(200, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({
             success: true,
@@ -173,7 +194,7 @@ const server = http.createServer((req, res) => {
   }
 
   // Admin routing shortcut
-  if (pathname === '/admin' || pathname === '/admin/') {
+  if (normalizedPath === '/admin') {
     pathname = '/admin.html';
   }
 
