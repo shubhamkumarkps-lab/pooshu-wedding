@@ -116,7 +116,7 @@ const server = http.createServer((req, res) => {
   }
 
   // API Endpoint: Download Excel Spreadsheet (.xlsx)
-  if ((normalizedPath === '/api/rsvps/download-excel' || normalizedPath === '/api/rsvps/export.xlsx') && (req.method === 'GET' || req.method === 'HEAD')) {
+  if ((normalizedPath === '/api/rsvps/download-excel' || normalizedPath === '/api/rsvps/export.xlsx' || normalizedPath === '/api/rsvps/export/excel' || normalizedPath === '/api/rsvps/excel') && (req.method === 'GET' || req.method === 'HEAD')) {
     try {
       syncSpreadsheets();
       const fileContent = fs.readFileSync(RSVP_XLSX_FILE);

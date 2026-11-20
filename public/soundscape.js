@@ -12,6 +12,7 @@ class SoundscapeEngine {
     this.currentTrack = 'as'; // Default song is Assamese ("Indradhanu") as requested
     this.isMuted = false;
     this.isPlayingMusic = false;
+    this.autoPlayOnReady = false;
     this.ytPlayer = null;
     this.ytReady = false;
 
@@ -318,7 +319,18 @@ class SoundscapeEngine {
         events: {
           onReady: () => {
             console.log('YouTube Audio Player is ready.');
-            if (startSec > 0 && this.ytPlayer && typeof this.ytPlayer.seekTo === 'function') {
+            if (this.autoPlayOnReady) {
+              const activeTrack = this.tracks[this.currentTrack];
+              const startSec = activeTrack.startSeconds || 0;
+              if (startSec > 0 && this.ytPlayer && typeof this.ytPlayer.seekTo === 'function') {
+                this.ytPlayer.seekTo(startSec, true);
+              }
+              if (this.ytPlayer && typeof this.ytPlayer.playVideo === 'function') {
+                this.ytPlayer.playVideo();
+                this.isPlayingMusic = true;
+                this.updateUI();
+              }
+            } else if (startSec > 0 && this.ytPlayer && typeof this.ytPlayer.seekTo === 'function') {
               this.ytPlayer.seekTo(startSec, true);
             }
           },
@@ -398,6 +410,36 @@ class SoundscapeEngine {
     }
   }
 
+  // Start default song (Assamese "Indradhanu") when user enters the main website
+  startDefaultTrack() {
+    this.ensureAudioContext();
+    this.currentTrack = 'as';
+    this.autoPlayOnReady = true;
+
+    if (this.ytPlayer && typeof this.ytPlayer.playVideo === 'function') {
+      const track = this.tracks['as'];
+      const startSec = track.startSeconds || 15;
+      try {
+        if (typeof this.ytPlayer.loadVideoById === 'function') {
+          this.ytPlayer.loadVideoById({
+            videoId: track.id,
+            startSeconds: startSec,
+            suggestedQuality: 'small'
+          });
+        }
+        if (startSec > 0 && typeof this.ytPlayer.seekTo === 'function') {
+          this.ytPlayer.seekTo(startSec, true);
+        }
+        this.ytPlayer.playVideo();
+        this.isPlayingMusic = true;
+        this.stopAmbientRaga();
+      } catch (e) {
+        console.warn('startDefaultTrack error:', e);
+      }
+    }
+    this.updateUI();
+  }
+
   switchTrack(trackKey) {
     if (!this.tracks[trackKey]) return;
     this.currentTrack = trackKey;
@@ -406,7 +448,7 @@ class SoundscapeEngine {
 
     if (this.ytPlayer) {
       try {
-        if (this.isPlayingMusic && typeof this.ytPlayer.loadVideoById === 'function') {
+        if (typeof this.ytPlayer.loadVideoById === 'function') {
           this.ytPlayer.loadVideoById({
             videoId: targetVideo.id,
             startSeconds: startSec,
@@ -418,12 +460,17 @@ class SoundscapeEngine {
             }, 200);
           }
           this.ytPlayer.playVideo();
+          this.isPlayingMusic = true;
+          this.stopAmbientRaga();
         } else if (typeof this.ytPlayer.cueVideoById === 'function') {
           this.ytPlayer.cueVideoById({
             videoId: targetVideo.id,
             startSeconds: startSec,
             suggestedQuality: 'small'
           });
+          this.ytPlayer.playVideo();
+          this.isPlayingMusic = true;
+          this.stopAmbientRaga();
         }
       } catch (e) {
         console.warn('Switching track error:', e);
@@ -432,15 +479,9 @@ class SoundscapeEngine {
     this.updateUI();
   }
 
-  // Hooked to language switcher: if lang is 'as', switch to Assamese song; if 'mai', switch to Maithili; if 'en', default to Assamese
+  // Music track is controlled exclusively by the user via the floating music player
   syncWithLanguage(lang) {
-    if (lang === 'as' && this.currentTrack !== 'as') {
-      this.switchTrack('as');
-    } else if (lang === 'mai' && this.currentTrack !== 'mai') {
-      this.switchTrack('mai');
-    } else if (lang === 'en' && this.currentTrack !== 'as') {
-      this.switchTrack('as');
-    }
+    // Intentionally uncoupled: language switching does NOT alter user's music track selection
   }
 
   updateUI() {

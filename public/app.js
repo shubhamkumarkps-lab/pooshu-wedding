@@ -135,10 +135,6 @@ class PooshuApp {
       btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
     });
 
-    if (window.pooshuAudio) {
-      window.pooshuAudio.syncWithLanguage(lang);
-    }
-
     this.renderLanguage(lang);
   }
 
@@ -304,15 +300,8 @@ class PooshuApp {
         window.pooshuAudio.playSealBreak();
       }
 
-      // 3D Flap Opening & Save The Date Card Emerging Animation
+      // 3D Flap Opening & Save The Date Card Emerging Animation (Silent invitation flow with only wax seal fracture SFX)
       scene.classList.add('open-animation');
-
-      // Start background wedding music
-      setTimeout(() => {
-        if (window.pooshuAudio) {
-          window.pooshuAudio.togglePlay();
-        }
-      }, 600);
 
       // Reveal "Enter Wedding Invitation" CTA button
       const enterBtn = document.getElementById('btn-enter-site');
@@ -434,6 +423,10 @@ class PooshuApp {
       if (typeof window.startPetalShower === 'function') {
         window.startPetalShower();
       }
+      // Start default Assamese song ("Indradhanu") once website opens
+      if (window.pooshuAudio && typeof window.pooshuAudio.startDefaultTrack === 'function') {
+        window.pooshuAudio.startDefaultTrack();
+      }
     }
   }
 
@@ -492,6 +485,31 @@ class PooshuApp {
         this.storyIndex = (this.storyIndex + 1) % total;
         this.renderCurrentStoryCard();
       });
+    }
+
+    // Mobile touch swipe gestures for the featured story card
+    const featuredCard = document.querySelector('.story-featured-card');
+    if (featuredCard) {
+      let touchStartX = 0;
+      let touchEndX = 0;
+      featuredCard.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      featuredCard.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const diffX = touchEndX - touchStartX;
+        if (Math.abs(diffX) > 45) {
+          const t = this.i18nData[this.currentLang];
+          const total = (t && t.story && t.story.chapters) ? t.story.chapters.length : 15;
+          if (diffX < 0) {
+            this.storyIndex = (this.storyIndex + 1) % total;
+          } else {
+            this.storyIndex = (this.storyIndex - 1 + total) % total;
+          }
+          this.renderCurrentStoryCard();
+        }
+      }, { passive: true });
     }
   }
 

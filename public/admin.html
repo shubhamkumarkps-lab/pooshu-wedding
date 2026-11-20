@@ -543,10 +543,7 @@
         <div id="login-error-msg" class="login-error">Invalid Login ID or Password. Please try again.</div>
       </form>
 
-      <div class="login-hint">
-        🔒 Default Credentials: <strong>admin</strong> / <strong>PooShu#2026!Royal</strong>
-      </div>
-      <div style="margin-top: 14px;">
+      <div style="margin-top: 18px;">
         <a href="/" style="color: var(--admin-gold); font-size: 0.82rem; text-decoration: none; font-weight: 600;">← Back to Wedding Invitation</a>
       </div>
     </div>
@@ -730,15 +727,9 @@
             errorMsg.style.display = 'block';
           }
         } catch (err) {
-          // Client-side fallback check if local server offline or network blip
-          if (username.toLowerCase() === 'admin' && password === 'PooShu#2026!Royal') {
-            sessionStorage.setItem(AUTH_KEY, 'true');
-            errorMsg.style.display = 'none';
-            showDashboard();
-          } else {
-            errorMsg.textContent = 'Authentication failed. Please verify credentials.';
-            errorMsg.style.display = 'block';
-          }
+          console.error('Authentication request error:', err);
+          errorMsg.textContent = 'Unable to reach authentication service. Please try again.';
+          errorMsg.style.display = 'block';
         }
       });
 

@@ -14,7 +14,7 @@
   <meta property="og:type" content="website">
 
   <!-- Master Stylesheet -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2.1">
 </head>
 <body>
 
@@ -479,31 +479,39 @@
           </p>
         </div>
 
-        <!-- Featured Story Card Viewer (15 Chronological Chapters with Real Photographs) -->
-        <div class="story-featured-card">
-          <div class="story-card-media">
-            <img id="story-card-img" src="assets/photos/story_2012.jpeg" alt="Love Story Memory">
-          </div>
+        <!-- Featured Story Card Viewer with LHS & RHS Navigation Buttons -->
+        <div class="story-gallery-viewport">
+          <button type="button" class="btn-story-edge-nav btn-story-edge-prev" id="story-prev-btn" aria-label="Previous Memory" title="Previous Memory">
+            <span>‹</span>
+          </button>
 
-          <div class="story-card-info">
-            <div>
-              <div class="story-meta-header">
-                <span class="year-badge-pill" id="story-card-year">2012</span>
-                <span class="milestone-index-label" id="story-step-indicator">1 / 15</span>
+          <div class="story-featured-card">
+            <div class="story-card-media">
+              <img id="story-card-img" src="assets/photos/story_2012.jpeg" alt="Love Story Memory">
+            </div>
+
+            <div class="story-card-info">
+              <div>
+                <div class="story-meta-header">
+                  <span class="year-badge-pill" id="story-card-year">2012</span>
+                  <span class="milestone-index-label" id="story-step-indicator">1 / 15</span>
+                </div>
+                <h3 class="story-chapter-title" id="story-card-title">First Outing, First Sparks</h3>
+                <h4 class="story-chapter-subtitle" id="story-card-sub">School Trip to Manesar</h4>
+                <p class="story-chapter-body" id="story-card-desc">
+                  Where it all began. Amidst high school chatter and adventurous day outings in Manesar, two lives crossed paths and an enduring spark was ignited.
+                </p>
               </div>
-              <h3 class="story-chapter-title" id="story-card-title">First Outing, First Sparks</h3>
-              <h4 class="story-chapter-subtitle" id="story-card-sub">School Trip to Manesar</h4>
-              <p class="story-chapter-body" id="story-card-desc">
-                Where it all began. Amidst high school chatter and adventurous day outings in Manesar, two lives crossed paths and an enduring spark was ignited.
-              </p>
-            </div>
 
-            <div class="story-carousel-arrows">
-              <button type="button" class="btn-story-nav" id="story-prev-btn" aria-label="Previous Story">‹</button>
-              <div class="story-dot-track" id="story-dots-container"></div>
-              <button type="button" class="btn-story-nav" id="story-next-btn" aria-label="Next Story">›</button>
+              <div class="story-carousel-footer">
+                <div class="story-dot-track" id="story-dots-container"></div>
+              </div>
             </div>
           </div>
+
+          <button type="button" class="btn-story-edge-nav btn-story-edge-next" id="story-next-btn" aria-label="Next Memory" title="Next Memory">
+            <span>›</span>
+          </button>
         </div>
 
         <!-- Desktop Milestone Quick-Selector Grid -->
@@ -774,8 +782,8 @@
 
   <!-- Application Scripts -->
   <script src="flower_particles.js"></script>
-  <script src="soundscape.js"></script>
+  <script src="soundscape.js?v=2.1"></script>
   <script src="scratch.js"></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=2.1"></script>
 </body>
 </html>
