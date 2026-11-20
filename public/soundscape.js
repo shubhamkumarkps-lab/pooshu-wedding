@@ -322,6 +322,13 @@ class SoundscapeEngine {
             if (this.autoPlayOnReady) {
               const activeTrack = this.tracks[this.currentTrack];
               const startSec = activeTrack.startSeconds || 0;
+              if (this.ytPlayer && typeof this.ytPlayer.loadVideoById === 'function') {
+                this.ytPlayer.loadVideoById({
+                  videoId: activeTrack.id,
+                  startSeconds: startSec,
+                  suggestedQuality: 'small'
+                });
+              }
               if (startSec > 0 && this.ytPlayer && typeof this.ytPlayer.seekTo === 'function') {
                 this.ytPlayer.seekTo(startSec, true);
               }
@@ -442,36 +449,40 @@ class SoundscapeEngine {
 
   switchTrack(trackKey) {
     if (!this.tracks[trackKey]) return;
+    this.ensureAudioContext();
     this.currentTrack = trackKey;
+    this.autoPlayOnReady = true;
     const targetVideo = this.tracks[trackKey];
     const startSec = targetVideo.startSeconds || 0;
 
-    if (this.ytPlayer) {
+    if (this.ytPlayer && typeof this.ytPlayer.loadVideoById === 'function') {
       try {
-        if (typeof this.ytPlayer.loadVideoById === 'function') {
-          this.ytPlayer.loadVideoById({
-            videoId: targetVideo.id,
-            startSeconds: startSec,
-            suggestedQuality: 'small'
-          });
-          if (startSec > 0) {
-            setTimeout(() => {
-              try { this.ytPlayer.seekTo(startSec, true); } catch(e) {}
-            }, 200);
-          }
-          this.ytPlayer.playVideo();
-          this.isPlayingMusic = true;
-          this.stopAmbientRaga();
-        } else if (typeof this.ytPlayer.cueVideoById === 'function') {
-          this.ytPlayer.cueVideoById({
-            videoId: targetVideo.id,
-            startSeconds: startSec,
-            suggestedQuality: 'small'
-          });
-          this.ytPlayer.playVideo();
-          this.isPlayingMusic = true;
-          this.stopAmbientRaga();
+        this.ytPlayer.loadVideoById({
+          videoId: targetVideo.id,
+          startSeconds: startSec,
+          suggestedQuality: 'small'
+        });
+        if (startSec > 0) {
+          setTimeout(() => {
+            try { this.ytPlayer.seekTo(startSec, true); } catch(e) {}
+          }, 200);
         }
+        this.ytPlayer.playVideo();
+        this.isPlayingMusic = true;
+        this.stopAmbientRaga();
+      } catch (e) {
+        console.warn('Switching track error:', e);
+      }
+    } else if (this.ytPlayer && typeof this.ytPlayer.cueVideoById === 'function') {
+      try {
+        this.ytPlayer.cueVideoById({
+          videoId: targetVideo.id,
+          startSeconds: startSec,
+          suggestedQuality: 'small'
+        });
+        this.ytPlayer.playVideo();
+        this.isPlayingMusic = true;
+        this.stopAmbientRaga();
       } catch (e) {
         console.warn('Switching track error:', e);
       }
@@ -479,9 +490,14 @@ class SoundscapeEngine {
     this.updateUI();
   }
 
-  // Music track is controlled exclusively by the user via the floating music player
+  // Hooked to language switcher: if lang is 'mai', switch to Maithili song; if 'as', switch to Assamese song
   syncWithLanguage(lang) {
-    // Intentionally uncoupled: language switching does NOT alter user's music track selection
+    if (lang === 'mai') {
+      this.switchTrack('mai');
+    } else if (lang === 'as') {
+      this.switchTrack('as');
+    }
+    // If 'en', keep current track undisturbed
   }
 
   updateUI() {

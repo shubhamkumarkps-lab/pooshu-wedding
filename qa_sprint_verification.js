@@ -58,10 +58,27 @@ assert(soundscapeJs.includes("currentTrack = 'as'"), 'Default audio track is Ass
 assert(soundscapeJs.includes("startSeconds: 15"), 'Assamese track has 15s start timestamp');
 assert(soundscapeJs.includes("startDefaultTrack()"), 'SoundscapeEngine exposes startDefaultTrack()');
 
-// Check uncoupled language switcher
+// Check language switcher syncs with music
 const switchLangBlock = appJs.substring(appJs.indexOf('switchLanguage(lang) {'), appJs.indexOf('renderLanguage(lang) {'));
-assert(!switchLangBlock.includes('syncWithLanguage'), 'switchLanguage does not sync or alter music track');
-assert(soundscapeJs.includes('Intentionally uncoupled'), 'SoundscapeEngine syncWithLanguage is uncoupled');
+assert(switchLangBlock.includes('syncWithLanguage(lang)'), 'switchLanguage calls syncWithLanguage(lang)');
+assert(soundscapeJs.includes("if (lang === 'mai')") && soundscapeJs.includes("switchTrack('mai')"), 'Switching to Maithili triggers Maithili song');
+assert(soundscapeJs.includes("else if (lang === 'as')") && soundscapeJs.includes("switchTrack('as')"), 'Switching to Assamese triggers Assamese song');
+
+// 3. Groom Residence Address Check
+console.log("\n--- 3. Groom's Address Verification ---");
+const enJson = JSON.parse(fs.readFileSync(path.join(__dirname, 'public/data/en.json'), 'utf8'));
+const asJson = JSON.parse(fs.readFileSync(path.join(__dirname, 'public/data/as.json'), 'utf8'));
+const maiJson = JSON.parse(fs.readFileSync(path.join(__dirname, 'public/data/mai.json'), 'utf8'));
+
+const enHaldi = enJson.events.list.find(e => e.id === 'haldi_groom');
+assert(enHaldi && enHaldi.venue.includes('2nd Floor, 1371, Block B, Greenfield Colony, Sector 43, Faridabad, Haryana, 121010'), 'EN Groom residence address updated');
+assert(enHaldi && enHaldi.mapsUrl.includes('1371') && enHaldi.mapsUrl.includes('Sector+43'), 'EN Groom residence Google Maps URL updated');
+
+const asHaldi = asJson.events.list.find(e => e.id === 'haldi_groom');
+assert(asHaldi && asHaldi.venue.includes('১৩৭১') && asHaldi.venue.includes('চেক্টৰ ৪৩'), 'Assamese Groom residence address updated');
+
+const maiHaldi = maiJson.events.list.find(e => e.id === 'haldi_groom');
+assert(maiHaldi && maiHaldi.venue.includes('१३७१') && maiHaldi.venue.includes('सेक्टर ४३'), 'Maithili Groom residence address updated');
 
 // 3. Story Page Mobile Scaling & Edge Navigation
 console.log('\n--- 3. Our Story Mobile Scaling & Edge Navigation ---');

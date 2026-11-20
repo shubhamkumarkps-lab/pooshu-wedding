@@ -135,6 +135,10 @@ class PooshuApp {
       btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
     });
 
+    if (window.pooshuAudio && typeof window.pooshuAudio.syncWithLanguage === 'function') {
+      window.pooshuAudio.syncWithLanguage(lang);
+    }
+
     this.renderLanguage(lang);
   }
 
