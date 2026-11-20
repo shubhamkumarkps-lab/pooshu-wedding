@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad_2018" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF8E1"/>
+      <stop offset="100%" stop-color="#FFECB3"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="320" rx="16" fill="url(#bgGrad_2018)"/>
+  <rect x="12" y="12" width="376" height="296" rx="12" fill="none" stroke="#C8A253" stroke-width="1.5" stroke-dasharray="6, 4" opacity="0.6"/>
+  <rect x="25" y="22" width="65" height="26" rx="13" fill="#FFFFFF" stroke="#C8A253" stroke-width="1"/>
+  <text x="57" y="39" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" fill="#3D262A" text-anchor="middle">2018</text>
+  
+     <ellipse cx="200" cy="235" rx="130" ry="45" fill="#FFFDE7" stroke="#C8A253" stroke-width="2"/>
+     <rect x="110" y="220" width="180" height="28" fill="#FFFFFF" stroke="#C72C35" stroke-width="1.5"/>
+     <line x1="120" y1="220" x2="120" y2="248" stroke="#C72C35" stroke-width="2"/>
+     <line x1="280" y1="220" x2="280" y2="248" stroke="#C72C35" stroke-width="2"/>
+     <ellipse cx="160" cy="235" rx="22" ry="10" fill="#FFCC80"/>
+     <ellipse cx="240" cy="235" rx="22" ry="10" fill="#FFE082"/>
+     <g transform="translate(145, 130)">
+       <circle cx="0" cy="0" r="20" fill="#FFDFC4"/>
+       <path d="M-20,-5 C-20,-22 20,-22 20,-5 Z" fill="#2C2C2C"/>
+       <circle cx="-6" cy="0" r="2" fill="#2C2C2C"/>
+       <circle cx="6" cy="0" r="2" fill="#2C2C2C"/>
+       <path d="M-3,8 Q0,12 3,8" stroke="#2C2C2C" stroke-width="1.5" fill="none"/>
+     </g>
+     <g transform="translate(255, 130)">
+       <circle cx="0" cy="0" r="20" fill="#FFDFC4"/>
+       <path d="M-20,-5 C-20,-22 20,-22 20,-5 Z" fill="#3E2723"/>
+       <circle cx="-6" cy="0" r="2" fill="#2C2C2C"/>
+       <circle cx="6" cy="0" r="2" fill="#2C2C2C"/>
+       <path d="M-3,8 Q0,12 3,8" stroke="#2C2C2C" stroke-width="1.5" fill="none"/>
+       <circle cx="20" cy="-6" r="4.5" fill="#F48FB1"/>
+     </g>
+     <text x="160" y="205" font-size="12" fill="#8D6E63" text-anchor="middle">Til Pitha</text>
+     <text x="240" y="205" font-size="12" fill="#8D6E63" text-anchor="middle">Thekua</text>
+     
+</svg>

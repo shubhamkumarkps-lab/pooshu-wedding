@@ -1,0 +1,366 @@
+{
+  "langCode": "en",
+  "langName": "English",
+  "hashtag": "#pooshu",
+  "meta": {
+    "title": "Pooja & Shubham | Wedding Invitation #pooshu",
+    "description": "Celebrating the wedding union of Pooja Haloi & Shubham Thakur. Two Cultures, One Eternal Promise."
+  },
+  "envelope": {
+    "monogram": "P & S",
+    "instruction": "Press & Hold to Unveil",
+    "tapToOpen": "OPEN INVITATION",
+    "blessing": "Shree Ganeshay Namah",
+    "blooming": "Blooming...",
+    "unveiled": "Unveiled!",
+    "tapHoldBtn": "Tap & Hold to Unveil"
+  },
+  "hero": {
+    "invocation": "Om Sri Ganeshaya Namah • With joyful hearts and the blessings of our parents",
+    "tagline": "🌺 Two Cultures, One Eternal Promise",
+    "bride": "Pooja Haloi",
+    "groom": "Shubham Thakur",
+    "brideLine": "Daughter of Smt. Champa Haloi & Dr. Ajit Kumar Haloi • Sister of Neha Haloi",
+    "groomLine": "Son of Smt. Kiran Thakur & Shri Suman Thakur • Brother of Shivam Thakur",
+    "invitationText": "request the honor of your gracious presence as they exchange sacred vows of love, heritage, and togetherness."
+  },
+  "scratch": {
+    "heading": "✨ Scratch to Reveal our Wedding Date!",
+    "subheading": "A Date to Hold Close — Scratch All Three Circles to Reveal",
+    "month": "DECEMBER",
+    "day": "02",
+    "year": "2026",
+    "unlockedNotice": "✨ Date Revealed! We cannot wait to celebrate with you! ✨",
+    "revealAllBtn": "Tap to Reveal All"
+  },
+  "countdown": {
+    "title": "Counting Every Heartbeat Until #pooshu",
+    "days": "Days",
+    "hours": "Hours",
+    "mins": "Mins",
+    "secs": "Secs"
+  },
+  "story": {
+    "sectionTitle": "Our 14-Year Journey",
+    "sectionSubtitle": "From high school sweethearts in 2012 to tying the knot in 2026",
+    "chapters": [
+      {
+        "year": "2012",
+        "title": "First Outing, First Sparks",
+        "subtitle": "School Trip to Manesar",
+        "desc": "Where it all began. Amidst high school chatter and adventurous day outings in Manesar, two lives crossed paths and an enduring spark was ignited.",
+        "image": "assets/photos/story_2012.jpeg"
+      },
+      {
+        "year": "2013",
+        "title": "Bus Rides & Shared Notes",
+        "subtitle": "Another High School Adventure",
+        "desc": "Passing notes across school bus seats, endless inside jokes, and realizing that every school trip was only memorable because we were together.",
+        "image": "assets/photos/story_2013.jpg"
+      },
+      {
+        "year": "2014",
+        "title": "Farewell Smiles & Sweet Beginnings",
+        "subtitle": "At a Restaurant After School Farewell",
+        "desc": "Dressed in formal farewell blazers and sarees, sitting at a local restaurant laughing over memories, silently promising that school ending was only our prologue.",
+        "image": "assets/photos/story_2014.jpeg"
+      },
+      {
+        "year": "2015",
+        "title": "Dhaak Beats & Festivity",
+        "subtitle": "Durga Puja Celebrations",
+        "desc": "Under the festive glow of pandal lights, fragrant incense, and rhythmic dhaak beats, celebrating the divine warmth of autumn together.",
+        "image": "assets/photos/story_2015.jpeg"
+      },
+      {
+        "year": "2016",
+        "title": "Above the Clouds in Triund",
+        "subtitle": "First Mountain Trek Together",
+        "desc": "Conquering rocky trails, cold mountain winds, and reaching the majestic green ridge of Triund together—our very first mountain adventure.",
+        "image": "assets/photos/story_2016.jpeg"
+      },
+      {
+        "year": "2017",
+        "title": "Chopsticks & Korean Flavors",
+        "subtitle": "First Dinner at a Korean Restaurant",
+        "desc": "Experimenting with sizzling barbecue and chopsticks, laughing through clumsy bites, and discovering our shared love for diverse culinary journeys.",
+        "image": "assets/photos/story_2017.jpeg"
+      },
+      {
+        "year": "2018",
+        "title": "Quiet Walks & Warm Companionship",
+        "subtitle": "Precious Outings & Timeless Bonds",
+        "desc": "Stepping out for spontaneous peaceful walks, sharing dreams and everyday stories, and finding comfort in simply having each other nearby.",
+        "image": "assets/photos/story_2018.jpeg"
+      },
+      {
+        "year": "2019",
+        "title": "The Misty Parvati Valley",
+        "subtitle": "Trek to Kheerganga",
+        "desc": "Winding pine trails, rushing river gorges, and soothing hot springs beneath a sky full of stars in the heart of Himachal.",
+        "image": "assets/photos/story_2019.jpg"
+      },
+      {
+        "year": "2020",
+        "title": "Unstoppable Laughter",
+        "subtitle": "First Live Standup Comedy Show",
+        "desc": "Tears of pure laughter, front-row comedy, and sharing the sheer happiness that makes every ordinary week feel extraordinary.",
+        "image": "assets/photos/story_2020.jpg"
+      },
+      {
+        "year": "2021",
+        "title": "The Moon Lake of Spiti",
+        "subtitle": "Expedition to Chandratal",
+        "desc": "Surrounded by barren Himalayan peaks and crystal turquoise waters at 14,000 feet, feeling that our love could weather any terrain.",
+        "image": "assets/photos/story_2021.jpg"
+      },
+      {
+        "year": "2022",
+        "title": "Colors of Eternal Joy",
+        "subtitle": "Festive Rang & Gulal",
+        "desc": "Drenched in crimson, gold, and joy. Celebrating Holi with hearts as vibrant as the festive gulal in the air.",
+        "image": "assets/photos/story_2022.jpg"
+      },
+      {
+        "year": "2023",
+        "title": "Dressed to Slay Together",
+        "subtitle": "Celebrations at a Wedding",
+        "desc": "All dolled up in ethnic finery, lighting up the celebration, and exchanging knowing smiles when friends asked: 'When is yours?'",
+        "image": "assets/photos/story_2023.jpg"
+      },
+      {
+        "year": "2024",
+        "title": "Another Wedding, Waiting for Ours",
+        "subtitle": "Dreaming of the Mandap",
+        "desc": "Celebrating love with loved ones, sharing secret glances across the wedding canopy, knowing with every heartbeat that our turn was coming next.",
+        "image": "assets/photos/story_2024.jpg"
+      },
+      {
+        "year": "2025",
+        "title": "Rokafied & Blessed",
+        "subtitle": "Official Family Sealing of Forever",
+        "desc": "Phulam Gamosas, Maithili Paag, golden envelopes, and blessed smiles. The moment both families officially proclaimed: It's #pooshu time!",
+        "image": "assets/photos/story_2025.jpeg"
+      },
+      {
+        "year": "2026",
+        "title": "#pooshu Forever: The Wedding",
+        "subtitle": "December 2, 2026 • Sacred Vows",
+        "desc": "Fourteen unforgettable years of laughter, growth, and companionship culminating at the sacred wedding mandap. Our forever starts today.",
+        "image": "assets/photos/story_2026.jpg"
+      }
+    ]
+  },
+  "events": {
+    "sectionTitle": "Wedding Celebrations",
+    "sectionSubtitle": "Join us across five memorable ceremonies filled with tradition, music, and love",
+    "filterAll": "All Events",
+    "filterBride": "Bride's Side (Haloi Family)",
+    "filterGroom": "Groom's Side (Thakur Family)",
+    "viewMap": "View Google Maps",
+    "addToCalendar": "Add to Calendar (.ics)",
+    "dressCode": "Dress Code",
+    "list": [
+      {
+        "id": "tilak_sagai",
+        "title": "Tilak & Sagai Ceremony",
+        "side": "groom",
+        "dateFormatted": "Sunday, November 29, 2026",
+        "schedule": "Tilak at 11:00 AM | Lunch at 1:00 PM | Sagai at 3:00 PM",
+        "venue": "Intezar Banquet & Garden, Sector 41, Surajkund Road, Faridabad, Haryana",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Intezar+Garden+Sector+41+Surajkund+Road+Faridabad",
+        "dressCodeTitle": "Traditional Grace & Royal Pastels",
+        "colors": [
+          "#E8B86D",
+          "#C58B7B",
+          "#5C2028"
+        ],
+        "colorNames": "Champagne Gold, Rose Gold, Deep Burgundy"
+      },
+      {
+        "id": "haldi_bride",
+        "title": "Haldi Ceremony (Bride's Side)",
+        "side": "bride",
+        "dateFormatted": "Monday, November 30, 2026",
+        "schedule": "4:00 PM Onwards",
+        "venue": "Bride's Residence: First Floor, 2870, Street No. 32, Tughlakabad Extension, New Delhi 110019",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=2870+Street+No+32+Tughlakabad+Extension+New+Delhi+110019",
+        "dressCodeTitle": "Sunlit Yellows & Assamese Muga Florals",
+        "colors": [
+          "#FDD835",
+          "#FFF9C4",
+          "#D81B60"
+        ],
+        "colorNames": "Mustard Turmeric, Pale Marigold, Kopou Orchid Pink"
+      },
+      {
+        "id": "haldi_groom",
+        "title": "Haldi Ceremony (Groom's Side)",
+        "side": "groom",
+        "dateFormatted": "Monday, November 30, 2026",
+        "schedule": "4:00 PM Onwards",
+        "venue": "Groom's Residence: Second Floor, 1377, B Block Green Field, Sector 49, Faridabad, Haryana",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=1377+B+Block+Green+Field+Sector+49+Faridabad+Haryana",
+        "dressCodeTitle": "Auspicious Matkor Yellow & Ochre",
+        "colors": [
+          "#FFB300",
+          "#FFF176",
+          "#BF360C"
+        ],
+        "colorNames": "Auspicious Turmeric, Warm Sunshine, Terracotta"
+      },
+      {
+        "id": "mehendi_sangeet",
+        "title": "Mehendi & Sangeet Ceremony",
+        "side": "bride",
+        "dateFormatted": "Tuesday, December 1, 2026",
+        "schedule": "Mehendi at 4:00 PM | Sangeet & Beats 7:00 PM Onwards",
+        "venue": "Bride's Residence: First Floor, 2870, Street No. 32, Tughlakabad Extension, New Delhi 110019",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=2870+Street+No+32+Tughlakabad+Extension+New+Delhi+110019",
+        "dressCodeTitle": "Pastel Festive Elegance & Twirling Florals",
+        "colors": [
+          "#81C784",
+          "#F48FB1",
+          "#BA68C8"
+        ],
+        "colorNames": "Pastel Sage, Peony Pink, Lavender Shimmer"
+      },
+      {
+        "id": "wedding_vivah",
+        "title": "Shubh Vivah (The Wedding)",
+        "side": "both",
+        "dateFormatted": "Wednesday, December 2, 2026",
+        "schedule": "Baarat Welcome 8:00 PM | Varmala 9:00 PM | Vivah 10:00 PM | Vidayi 4:00 AM (Dec 3)",
+        "venue": "Sunbird Resorts, Lakewood City, Surajkund, Faridabad, Haryana 121009",
+        "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sunbird+Resorts+Surajkund+Faridabad+Haryana",
+        "dressCodeTitle": "Royal Traditional & Soft Pastel Luxury",
+        "colors": [
+          "#C8A253",
+          "#C72C35",
+          "#FBF0F2"
+        ],
+        "colorNames": "Antique Foil Gold, Ceremonial Red, Soft Blush Silk"
+      }
+    ]
+  },
+  "rsvp": {
+    "sectionTitle": "💌 Celebrate With Us",
+    "sectionSubtitle": "Kindly respond by November 15, 2026 to help us prepare your royal welcome",
+    "formTitle": "RSVP & Digital Wedding Pass",
+    "fullName": "Your Full Name",
+    "fullNamePlaceholder": "e.g., Ananya Sharma",
+    "sideLabel": "Whose Side Are You Joining?",
+    "sideBride": "Bride's Guest (Pooja Haloi)",
+    "sideGroom": "Groom's Guest (Shubham Thakur)",
+    "sideMutual": "Friends of Both / Mutual Guest",
+    "attendingLabel": "Will You Be Attending?",
+    "attendingYes": "Joyfully Accept",
+    "attendingNo": "Regretfully Decline",
+    "guestCount": "Number of Guests (including yourself)",
+    "eventsAttending": "Which Ceremonies Will You Grace?",
+    "djSong": "DJ Song Request (What track gets you dancing?)",
+    "djSongPlaceholder": "e.g., London Thumakda / Bihu Fusion",
+    "submitBtn": "Confirm Your RSVP",
+    "submittedTitle": "You're Confirmed for #pooshu!",
+    "submittedSub": "Here is your exclusive Digital Wedding Pass. Present this or save it to your phone.",
+    "passGuest": "Guest Name",
+    "passSeat": "Allotted Pass ID",
+    "downloadPass": "Download Pass (PNG)",
+    "shareWhatsApp": "Share on WhatsApp"
+  },
+  "audio": {
+    "floatingLabel": "Wedding Soundscape",
+    "maithiliBtn": "Maithili Song",
+    "assameseBtn": "Indradhanu (Assamese)",
+    "playing": "Now Playing"
+  },
+  "footer": {
+    "withLove": "Crafted with immense love for Pooja & Shubham",
+    "hashtag": "#pooshu • Delhi NCR 2026",
+    "blessings": "May Lord Ganesha shower eternal happiness and prosperous beginnings."
+  },
+  "nav": {
+    "wedding": "The Wedding",
+    "bride": "Know the Bride",
+    "groom": "Know the Groom",
+    "story": "Our Story",
+    "events": "Events",
+    "rsvp": "RSVP"
+  },
+  "bridePage": {
+    "badge": "Assamese Heritage • The Bride",
+    "title": "Pooja Haloi",
+    "subtitle": "A journey of grace, warmth, cultural pride, and boundless dreams",
+    "motto": "🌸 হেঁপাহৰ ৰঙীন সপোন (Dreams woven with pure devotion)",
+    "heritageTitle": "Cultural Roots & Assamese Traditions",
+    "heritageText": "Rooted in the timeless elegance of Assam, Pooja carries forward the warmth of Phulam Gamosa, the pride of Muga silk, and the auspicious fragrance of Kopou orchids. Her heritage shines through festive Rongali Bihu rhythms, the reverence of Brass Xorai, and heartfelt wedding customs including Joron and Biya Naam.",
+    "storyTitle": "The 14-Year Love Story (Her Perspective)",
+    "storyText": "What started across high school benches in 2012 was simple and effortless. Over 14 years of exams, college, career dreams, and quiet moments, Shubham became my anchor, my confidant, and my greatest source of joy. Every milestone felt lighter with him by my side.",
+    "factsTitle": "Passions, Quirks & Fun Facts",
+    "facts": [
+      {
+        "icon": "✨",
+        "title": "The Creative Heart",
+        "desc": "An eye for aesthetic design, home warmth, and making every moment memorable."
+      },
+      {
+        "icon": "☕",
+        "title": "Chai Over Everything",
+        "desc": "Cannot start the morning without a steaming cup of handcrafted milk tea."
+      },
+      {
+        "icon": "🥘",
+        "title": "Culinary Pride",
+        "desc": "Loves authentic Assamese Maasor Tenga, Khar, and festive homemade Pithas."
+      },
+      {
+        "icon": "💛",
+        "title": "Favorite Memory",
+        "desc": "Shubham surprising her after long exam seasons with comfort food and endless laughter."
+      }
+    ],
+    "familyTitle": "Family Honor & Blessings",
+    "familyText": "Beloved daughter of Dr. Ajit Kumar Haloi & Smt. Champa Haloi • Sister of Neha Haloi.",
+    "blessing": "May Lord Ganesha and the sacred soil of Kamrup bless their lifelong union with boundless joy and health.",
+    "backBtn": "← Back to Wedding Invitation",
+    "peerBtn": "Explore Shubham's Story"
+  },
+  "groomPage": {
+    "badge": "Maithili Heritage • The Groom",
+    "title": "Shubham Thakur",
+    "subtitle": "A mind driven by vision, a heart & anchored in tradition & Love",
+    "motto": "🦚 मिथिलाक पाग, विद्या ओ संस्कार (Honor, wisdom & sanctity)",
+    "heritageTitle": "Cultural Roots & Maithili Traditions",
+    "heritageText": "Carrying the legacy of Mithila—the land of Raja Janak and Sita—Shubham takes pride in the honor of the Paag, the cosmic harmony of Kohbar art, and sacred Vedic traditions. His cultural roots represent unwavering integrity, deep respect for elders, and the musical poetry of Maithili Vivah Geet.",
+    "storyTitle": "The 14-Year Love Story (His Perspective)",
+    "storyText": "The moment I saw Pooja in 2012, my world found its center. Through 14 transformative years—school farewells, engineering challenges, product milestones—her faith in me has been my guiding light. Choosing her forever is the easiest and greatest decision of my life.",
+    "factsTitle": "Passions, Quirks & Fun Facts",
+    "facts": [
+      {
+        "icon": "💻",
+        "title": "The Visionary Builder",
+        "desc": "Passionate technologist and product creator who loves turning complex ideas into magic."
+      },
+      {
+        "icon": "🎵",
+        "title": "Melody Explorer",
+        "desc": "Deeply moved by traditional ghazals, regional wedding geet, and vintage melodies."
+      },
+      {
+        "icon": "🍲",
+        "title": "Comfort Food",
+        "desc": "Classic Maithili Machh-Bhaat and festive winter tilkuts."
+      },
+      {
+        "icon": "🌟",
+        "title": "Favorite Trait in Pooja",
+        "desc": "Her radiant smile that instantly dissolves stress and makes any house feel like home."
+      }
+    ],
+    "familyTitle": "Family Honor & Blessings",
+    "familyText": "Beloved son of Shri Suman Thakur & Smt. Kiran Thakur • Brother of Shivam Thakur.",
+    "blessing": "May the divine blessings of Lord Shiva and Mata Parvati grant their journey everlasting companionship.",
+    "backBtn": "← Back to Wedding Invitation",
+    "peerBtn": "Explore Pooja's Story"
+  }
+}

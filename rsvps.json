@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Test",
+    "side": "groom",
+    "attending": "yes",
+    "guestCount": "1",
+    "dietary": "veg",
+    "djSong": "",
+    "passCode": "POOSHU-VIP-7667",
+    "timestamp": "2026-10-25T20:45:58.726Z"
+  },
+  {
+    "name": "Shubham",
+    "side": "mutual",
+    "attending": "yes",
+    "guestCount": "1",
+    "dietary": "veg",
+    "djSong": "",
+    "timestamp": "2026-11-19T18:21:41.168Z"
+  },
+  {
+    "name": "Test 2",
+    "side": "mutual",
+    "attending": "yes",
+    "guestCount": "1",
+    "djSong": "",
+    "timestamp": "2026-11-20T07:24:24.321Z"
+  }
+]

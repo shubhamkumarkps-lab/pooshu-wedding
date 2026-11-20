@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="brassGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF2B2"/>
+      <stop offset="35%" stop-color="#E5C158"/>
+      <stop offset="70%" stop-color="#C29731"/>
+      <stop offset="100%" stop-color="#8C6614"/>
+    </linearGradient>
+    <linearGradient id="orchidGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F8BBD0"/>
+      <stop offset="50%" stop-color="#E91E63"/>
+      <stop offset="100%" stop-color="#880E4F"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="500" height="500" rx="20" fill="#FAF7F2"/>
+  <circle cx="250" cy="250" r="210" fill="#FFFDFB" stroke="#E0D5C1" stroke-width="2"/>
+
+  <!-- Phulam Gamosa Cloth Beneath -->
+  <g id="gamosa-cloth" transform="translate(100, 260)">
+    <path d="M 0,60 L 300,60 L 320,180 L -20,180 Z" fill="#FFFFFF" stroke="#C72C35" stroke-width="2"/>
+    <!-- Red woven geometric rows -->
+    <line x1="-15" y1="80" x2="315" y2="80" stroke="#C72C35" stroke-width="3"/>
+    <line x1="-18" y1="92" x2="318" y2="92" stroke="#C72C35" stroke-width="2"/>
+    <path d="M 0,115 L 20,95 L 40,115 L 60,95 L 80,115 L 100,95 L 120,115 L 140,95 L 160,115 L 180,95 L 200,115 L 220,95 L 240,115 L 260,95 L 280,115 L 300,95" stroke="#C72C35" stroke-width="3.5" fill="none"/>
+    <line x1="-20" y1="165" x2="320" y2="165" stroke="#C72C35" stroke-width="4"/>
+  </g>
+
+  <!-- Brass Xorai (Standing Vessel) -->
+  <g id="xorai-vessel" transform="translate(250, 150)">
+    <!-- Base Plate -->
+    <ellipse cx="0" cy="200" rx="80" ry="22" fill="url(#brassGold)" stroke="#5D4037" stroke-width="2"/>
+    <ellipse cx="0" cy="195" rx="68" ry="16" fill="#FFF9C4"/>
+    <!-- Curved Fluted Pedestal Stem -->
+    <path d="M -16,195 C -12,140 -25,90 -18,60 L 18,60 C 25,90 12,140 16,195 Z" fill="url(#brassGold)" stroke="#5D4037" stroke-width="2"/>
+    <ellipse cx="0" cy="120" rx="28" ry="8" fill="url(#brassGold)" stroke="#5D4037" stroke-width="1.5"/>
+    <!-- Shallow Bowl Dish -->
+    <ellipse cx="0" cy="55" rx="110" ry="30" fill="url(#brassGold)" stroke="#5D4037" stroke-width="2"/>
+    <ellipse cx="0" cy="50" rx="98" ry="24" fill="#FFF59D"/>
+
+    <!-- Tamul-Paan Offering (Betel Leaves & Areca Nuts) -->
+    <path d="M -40,42 C -20,20 20,20 40,42 C 20,62 -20,62 -40,42 Z" fill="#43A047" stroke="#2E7D32" stroke-width="1.5"/>
+    <circle cx="-12" cy="42" r="9" fill="#8D6E63" stroke="#4E342E" stroke-width="1.5"/>
+    <circle cx="12" cy="40" r="9" fill="#8D6E63" stroke="#4E342E" stroke-width="1.5"/>
+
+    <!-- Tiered Conical Lid of Xorai -->
+    <path d="M -75,45 C -60,0 0,-60 0,-60 C 0,-60 60,0 75,45 Z" fill="url(#brassGold)" stroke="#5D4037" stroke-width="2"/>
+    <ellipse cx="0" cy="45" rx="75" ry="16" fill="url(#brassGold)" stroke="#5D4037" stroke-width="1.5"/>
+    <!-- Finial Crown Needle -->
+    <polygon points="0,-95 -7,-60 7,-60" fill="url(#brassGold)" stroke="#5D4037" stroke-width="1.5"/>
+    <circle cx="0" cy="-96" r="6" fill="#FFD54F" stroke="#5D4037" stroke-width="1.5"/>
+  </g>
+
+  <!-- Cascading Kopou Phool (Foxtail Orchid Sprays on Sides) -->
+  <g id="kopou-left" transform="translate(100, 120)">
+    <path d="M 0,0 Q 30,80 15,160 Q 5,200 15,240" stroke="#388E3C" stroke-width="3" fill="none"/>
+    <!-- Delicate Pink Orchid Florets -->
+    <g fill="#F48FB1" stroke="#AD1457" stroke-width="1">
+      <circle cx="8" cy="30" r="9"/>
+      <circle cx="22" cy="55" r="10"/>
+      <circle cx="12" cy="85" r="11"/>
+      <circle cx="24" cy="115" r="11"/>
+      <circle cx="15" cy="145" r="10"/>
+      <circle cx="22" cy="175" r="9"/>
+      <circle cx="14" cy="205" r="8"/>
+      <circle cx="16" cy="230" r="6"/>
+    </g>
+    <!-- Dark Magenta Orchid Lips -->
+    <g fill="#880E4F">
+      <circle cx="8" cy="31" r="3"/>
+      <circle cx="22" cy="56" r="3.5"/>
+      <circle cx="12" cy="86" r="3.5"/>
+      <circle cx="24" cy="116" r="3.5"/>
+      <circle cx="15" cy="146" r="3"/>
+      <circle cx="22" cy="176" r="2.5"/>
+    </g>
+  </g>
+
+  <g id="kopou-right" transform="translate(400, 120) scale(-1, 1)">
+    <path d="M 0,0 Q 30,80 15,160 Q 5,200 15,240" stroke="#388E3C" stroke-width="3" fill="none"/>
+    <g fill="#F48FB1" stroke="#AD1457" stroke-width="1">
+      <circle cx="8" cy="30" r="9"/>
+      <circle cx="22" cy="55" r="10"/>
+      <circle cx="12" cy="85" r="11"/>
+      <circle cx="24" cy="115" r="11"/>
+      <circle cx="15" cy="145" r="10"/>
+      <circle cx="22" cy="175" r="9"/>
+      <circle cx="14" cy="205" r="8"/>
+      <circle cx="16" cy="230" r="6"/>
+    </g>
+    <g fill="#880E4F">
+      <circle cx="8" cy="31" r="3"/>
+      <circle cx="22" cy="56" r="3.5"/>
+      <circle cx="12" cy="86" r="3.5"/>
+      <circle cx="24" cy="116" r="3.5"/>
+      <circle cx="15" cy="146" r="3"/>
+      <circle cx="22" cy="176" r="2.5"/>
+    </g>
+  </g>
+
+  <!-- Title Banner -->
+  <text x="250" y="475" font-family="'Raleway', sans-serif" font-size="14" font-weight="700" 
+        fill="#6E4750" text-anchor="middle" letter-spacing="3">
+    ASSAMESE XORAI &amp; KOPOU PHOOL
+  </text>
+</svg>

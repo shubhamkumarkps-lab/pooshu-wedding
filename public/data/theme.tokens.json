@@ -1,0 +1,69 @@
+{
+  "name": "PooShu Pastel Luxury Wedding Theme",
+  "version": "1.0.0",
+  "hashtag": "#pooshu",
+  "colors": {
+    "backgrounds": {
+      "alabaster": "#FDFBF9",
+      "blushRose": "#FBF0F2",
+      "mugaChampagne": "#F7EFE1",
+      "sageMist": "#EFF5F2",
+      "envelopeOuter": "#F7E9EA",
+      "envelopeInner": "#FFF8F2",
+      "cardSurface": "#FFFFFF"
+    },
+    "accents": {
+      "roseGold": "#C58B7B",
+      "antiqueGold": "#C8A253",
+      "brightGold": "#E6C673",
+      "waxRed": "#A83236",
+      "waxGold": "#D4AF37",
+      "assameseRed": "#C72C35",
+      "maithiliPeacockBlue": "#1B6B76",
+      "maithiliOchre": "#D99B26"
+    },
+    "typography": {
+      "deepPlum": "#3D262A",
+      "mutedMulberry": "#6E4750",
+      "warmSlate": "#59616D",
+      "goldText": "#99732B",
+      "offWhite": "#FAF7F5"
+    },
+    "borders": {
+      "subtleGold": "rgba(200, 162, 83, 0.35)",
+      "softBlush": "rgba(197, 139, 123, 0.25)",
+      "divider": "rgba(61, 38, 42, 0.08)"
+    }
+  },
+  "typography": {
+    "fonts": {
+      "display": "'Cormorant Garamond', 'Cinzel Decorative', 'Noto Serif Devanagari', serif",
+      "subheading": "'Marcellus', 'Playfair Display', 'Noto Serif Bengali', serif",
+      "body": "'Plus Jakarta Sans', 'Inter', 'Noto Sans Devanagari', 'Noto Sans Bengali', sans-serif",
+      "script": "'Great Vibes', 'Alex Brush', cursive"
+    },
+    "fontSizes": {
+      "xs": "0.75rem",
+      "sm": "0.875rem",
+      "base": "1rem",
+      "lg": "1.125rem",
+      "xl": "1.25rem",
+      "2xl": "1.5rem",
+      "3xl": "1.875rem",
+      "4xl": "2.25rem"
+    }
+  },
+  "shadows": {
+    "envelope": "0 25px 50px -12px rgba(61, 38, 42, 0.25), 0 0 0 1px rgba(200, 162, 83, 0.2)",
+    "card": "0 15px 35px -5px rgba(61, 38, 42, 0.08), 0 0 1px rgba(200, 162, 83, 0.3)",
+    "seal": "0 10px 25px rgba(168, 50, 54, 0.45), inset 0 2px 4px rgba(255, 255, 255, 0.6), inset 0 -3px 6px rgba(0, 0, 0, 0.4)",
+    "floatingPill": "0 12px 30px rgba(61, 38, 42, 0.15), 0 0 0 1px rgba(200, 162, 83, 0.25)"
+  },
+  "gradients": {
+    "goldFoil": "linear-gradient(135deg, #ECC880 0%, #FDF4D4 28%, #D4AF37 50%, #FAF0B8 72%, #B38628 100%)",
+    "softBlush": "linear-gradient(180deg, #FDFBF9 0%, #FBF0F2 50%, #F7EFE1 100%)",
+    "sageCard": "linear-gradient(145deg, #EFF5F2 0%, #E2ECE6 100%)",
+    "roseCard": "linear-gradient(145deg, #FBF0F2 0%, #F6E2E6 100%)",
+    "sealWax": "radial-gradient(circle at 35% 35%, #E2484D 0%, #B72B30 45%, #7D1519 100%)"
+  }
+}

@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 800" width="100%" height="100%">
+  <defs>
+    <!-- Gold Trim Gradient -->
+    <linearGradient id="archGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ECC880"/>
+      <stop offset="35%" stop-color="#FDF4D4"/>
+      <stop offset="65%" stop-color="#C8A253"/>
+      <stop offset="100%" stop-color="#99732B"/>
+    </linearGradient>
+
+    <!-- Arch Background Glow -->
+    <linearGradient id="innerArchGlow" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#FFFDFB"/>
+      <stop offset="40%" stop-color="#FAF5EE"/>
+      <stop offset="100%" stop-color="#F4ECE1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Jharokha Scalloped Arch Silhouette -->
+  <!-- Outer Arch Border Line -->
+  <path d="M 60,780 L 60,320 
+           C 60,260 90,210 130,190 
+           C 140,165 170,140 210,135 
+           C 240,105 270,75 300,50 
+           C 330,75 360,105 390,135 
+           C 430,140 460,165 470,190 
+           C 510,210 540,260 540,320 
+           L 540,780 Z" 
+        fill="url(#innerArchGlow)" 
+        stroke="url(#archGold)" 
+        stroke-width="5"/>
+
+  <!-- Inner Inset Double Line with Scallops -->
+  <path d="M 75,770 L 75,325 
+           C 75,270 102,224 140,204 
+           C 150,180 178,156 215,150 
+           C 242,124 270,95 300,72 
+           C 330,95 358,124 385,150 
+           C 422,156 450,180 460,204 
+           C 498,224 525,270 525,325 
+           L 525,770" 
+        fill="none" 
+        stroke="#C8A253" 
+        stroke-width="1.8" 
+        stroke-dasharray="4, 3"
+        opacity="0.85"/>
+
+  <!-- Crown Finial Lotus atop Arch -->
+  <g transform="translate(300, 48)">
+    <path d="M0,-24 C-8,-14 -12,-5 0,8 C12,-5 8,-14 0,-24 Z" fill="#C72C35"/>
+    <path d="M-6,-16 C-18,-8 -18,2 -4,6" stroke="url(#archGold)" stroke-width="1.5" fill="none"/>
+    <path d="M6,-16 C18,-8 18,2 4,6" stroke="url(#archGold)" stroke-width="1.5" fill="none"/>
+    <circle cx="0" cy="-26" r="3.5" fill="url(#archGold)"/>
+  </g>
+
+  <!-- Left Corner Blush Roses & Kopou Orchid Swags -->
+  <g id="left-floral-corner" transform="translate(45, 120)">
+    <!-- Main Blush Rose -->
+    <circle cx="50" cy="50" r="28" fill="#FCE4EC" stroke="#C58B7B" stroke-width="1.5"/>
+    <path d="M38,45 C34,58 48,65 58,58 C68,52 64,36 50,38 C42,40 44,48 50,48" stroke="#D87A8F" stroke-width="2" fill="none"/>
+    <!-- Bud Rose -->
+    <circle cx="20" cy="85" r="16" fill="#F8BBD0" stroke="#C58B7B" stroke-width="1.2"/>
+    <circle cx="85" cy="25" r="18" fill="#F8BBD0" stroke="#C58B7B" stroke-width="1.2"/>
+    <!-- Sage Leaves -->
+    <path d="M72,40 C85,30 95,45 80,55 Z" fill="#C8E6C9" stroke="#81C784" stroke-width="1"/>
+    <path d="M25,40 C10,30 5,48 20,55 Z" fill="#C8E6C9" stroke="#81C784" stroke-width="1"/>
+    <!-- Gold Filigree Tendril -->
+    <path d="M30,20 Q60,-10 90,10 T110,40" stroke="url(#archGold)" stroke-width="1.5" fill="none"/>
+    <circle cx="110" cy="40" r="3" fill="#D4AF37"/>
+  </g>
+
+  <!-- Right Corner Blush Roses & Kopou Orchid Swags (Mirrored) -->
+  <g id="right-floral-corner" transform="translate(455, 120)">
+    <!-- Main Blush Rose -->
+    <circle cx="50" cy="50" r="28" fill="#FCE4EC" stroke="#C58B7B" stroke-width="1.5"/>
+    <path d="M62,45 C66,58 52,65 42,58 C32,52 36,36 50,38 C58,40 56,48 50,48" stroke="#D87A8F" stroke-width="2" fill="none"/>
+    <!-- Bud Rose -->
+    <circle cx="80" cy="85" r="16" fill="#F8BBD0" stroke="#C58B7B" stroke-width="1.2"/>
+    <circle cx="15" cy="25" r="18" fill="#F8BBD0" stroke="#C58B7B" stroke-width="1.2"/>
+    <!-- Sage Leaves -->
+    <path d="M28,40 C15,30 5,45 20,55 Z" fill="#C8E6C9" stroke="#81C784" stroke-width="1"/>
+    <path d="M75,40 C90,30 95,48 80,55 Z" fill="#C8E6C9" stroke="#81C784" stroke-width="1"/>
+    <!-- Gold Filigree Tendril -->
+    <path d="M70,20 Q40,-10 10,10 T-10,40" stroke="url(#archGold)" stroke-width="1.5" fill="none"/>
+    <circle cx="-10" cy="40" r="3" fill="#D4AF37"/>
+  </g>
+
+  <!-- Left Side Draped Peacocks on Arch Pillar -->
+  <g transform="translate(68, 300) scale(0.65)">
+    <!-- Madhubani Peacock perched -->
+    <path d="M30,20 C10,50 -10,80 -25,120 C-40,160 -45,210 -30,260 C-20,290 0,300 20,280 C30,240 10,190 25,140 Z" fill="#E0F2F1" stroke="#26A69A" stroke-width="1.5"/>
+    <ellipse cx="25" cy="60" rx="14" ry="24" fill="#00897B"/>
+    <circle cx="28" cy="28" r="12" fill="#00796B"/>
+    <polygon points="36,25 48,27 36,31" fill="#FFB300"/>
+    <circle cx="30" cy="25" r="2" fill="#FFFFFF"/>
+    <!-- Crest -->
+    <path d="M26,16 Q20,2 14,4 M28,16 Q28,-2 30,-3 M31,16 Q36,2 40,4" stroke="#D4AF37" stroke-width="1.5" fill="none"/>
+    <circle cx="14" cy="4" r="2.5" fill="#C62828"/>
+    <circle cx="30" cy="-3" r="2.5" fill="#D4AF37"/>
+    <circle cx="40" cy="4" r="2.5" fill="#C62828"/>
+  </g>
+
+  <!-- Right Side Draped Peacocks on Arch Pillar -->
+  <g transform="translate(532, 300) scale(-0.65, 0.65)">
+    <!-- Madhubani Peacock perched -->
+    <path d="M30,20 C10,50 -10,80 -25,120 C-40,160 -45,210 -30,260 C-20,290 0,300 20,280 C30,240 10,190 25,140 Z" fill="#E0F2F1" stroke="#26A69A" stroke-width="1.5"/>
+    <ellipse cx="25" cy="60" rx="14" ry="24" fill="#00897B"/>
+    <circle cx="28" cy="28" r="12" fill="#00796B"/>
+    <polygon points="36,25 48,27 36,31" fill="#FFB300"/>
+    <circle cx="30" cy="25" r="2" fill="#FFFFFF"/>
+    <!-- Crest -->
+    <path d="M26,16 Q20,2 14,4 M28,16 Q28,-2 30,-3 M31,16 Q36,2 40,4" stroke="#D4AF37" stroke-width="1.5" fill="none"/>
+    <circle cx="14" cy="4" r="2.5" fill="#C62828"/>
+    <circle cx="30" cy="-3" r="2.5" fill="#D4AF37"/>
+    <circle cx="40" cy="4" r="2.5" fill="#C62828"/>
+  </g>
+</svg>

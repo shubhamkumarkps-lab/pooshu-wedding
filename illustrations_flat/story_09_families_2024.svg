@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad_2024" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBE9E7"/>
+      <stop offset="100%" stop-color="#FFCCBC"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="320" rx="16" fill="url(#bgGrad_2024)"/>
+  <rect x="12" y="12" width="376" height="296" rx="12" fill="none" stroke="#C8A253" stroke-width="1.5" stroke-dasharray="6, 4" opacity="0.6"/>
+  <rect x="25" y="22" width="65" height="26" rx="13" fill="#FFFFFF" stroke="#C8A253" stroke-width="1"/>
+  <text x="57" y="39" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" fill="#3D262A" text-anchor="middle">2024</text>
+  
+     <rect x="40" y="50" width="320" height="230" rx="10" fill="#FFF8E1" stroke="#FFB74D" stroke-width="2"/>
+     <path d="M50,85 Q200,60 350,85" stroke="#C72C35" stroke-width="3" fill="none"/>
+     <circle cx="100" cy="80" r="5" fill="#FFEB3B"/>
+     <circle cx="200" cy="72" r="7" fill="#E91E63"/>
+     <circle cx="300" cy="80" r="5" fill="#FFEB3B"/>
+     <g transform="translate(120, 160)">
+       <circle cx="0" cy="0" r="17" fill="#FFDFC4"/>
+       <path d="M-17,-8 C-17,-22 17,-22 17,-8 Z" fill="#D32F2F"/>
+       <rect x="-13" y="17" width="26" height="55" rx="6" fill="#FFE082"/>
+     </g>
+     <g transform="translate(200, 145)">
+       <circle cx="-15" cy="0" r="17" fill="#FFDFC4"/>
+       <path d="M-32,-8 C-32,-24 0,-24 0,-8 Z" fill="#2C2C2C"/>
+       <circle cx="15" cy="0" r="17" fill="#FFDFC4"/>
+       <path d="M0,-8 C0,-24 32,-24 32,-8 Z" fill="#3E2723"/>
+       <ellipse cx="0" cy="22" rx="26" ry="10" fill="#FFFFFF" stroke="#C72C35" stroke-width="1.5"/>
+     </g>
+     <g transform="translate(280, 160)">
+       <circle cx="0" cy="0" r="17" fill="#FFDFC4"/>
+       <path d="M-17,-8 C-17,-22 17,-22 17,-8 Z" fill="#4E342E"/>
+       <rect x="-13" y="17" width="26" height="55" rx="6" fill="#FFCDD2"/>
+     </g>
+     <text x="200" y="250" font-size="12" font-family="sans-serif" font-weight="bold" fill="#C72C35" text-anchor="middle">Thakur &amp; Haloi Parivar</text>
+     
+</svg>

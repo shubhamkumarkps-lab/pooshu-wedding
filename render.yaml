@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: pooshu-wedding
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: PORT
+        value: 3000
+      - key: ADMIN_USER
+        value: admin
+      - key: ADMIN_PASS
+        value: PooShu#2026!Royal

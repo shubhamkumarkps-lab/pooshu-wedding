@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad_2014" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE8EC"/>
+      <stop offset="100%" stop-color="#FFB6C1"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="320" rx="16" fill="url(#bgGrad_2014)"/>
+  <rect x="12" y="12" width="376" height="296" rx="12" fill="none" stroke="#C8A253" stroke-width="1.5" stroke-dasharray="6, 4" opacity="0.6"/>
+  <rect x="25" y="22" width="65" height="26" rx="13" fill="#FFFFFF" stroke="#C8A253" stroke-width="1"/>
+  <text x="57" y="39" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" fill="#3D262A" text-anchor="middle">2014</text>
+  
+     <rect x="60" y="60" width="280" height="90" rx="6" fill="#2E4F4F" stroke="#0E2929" stroke-width="3"/>
+     <text x="200" y="110" font-family="sans-serif" font-size="16" fill="#FFFFFF" text-anchor="middle" opacity="0.9">Classroom 10-A • 2014</text>
+     <rect x="50" y="210" width="130" height="85" rx="6" fill="#C89F77"/>
+     <rect x="220" y="210" width="130" height="85" rx="6" fill="#C89F77"/>
+     <g transform="translate(115, 150)">
+       <rect x="-15" y="35" width="30" height="55" rx="8" fill="#FFFFFF" stroke="#3D262A" stroke-width="1.5"/>
+       <polygon points="-4,35 4,35 0,55" fill="#C72C35"/>
+       <circle cx="0" cy="15" r="18" fill="#FFDFC4" stroke="#3D262A" stroke-width="1.5"/>
+       <path d="M-18,12 C-18,-8 18,-8 18,12 C10,0 -10,0 -18,12 Z" fill="#2C2C2C"/>
+       <circle cx="-6" cy="15" r="2" fill="#2C2C2C"/>
+       <circle cx="6" cy="15" r="2" fill="#2C2C2C"/>
+       <path d="M-3,22 Q0,25 3,22" stroke="#2C2C2C" stroke-width="1" fill="none"/>
+       <ellipse cx="-10" cy="18" rx="3.5" ry="2" fill="#FF8FA3" opacity="0.7"/>
+       <ellipse cx="10" cy="18" rx="3.5" ry="2" fill="#FF8FA3" opacity="0.7"/>
+     </g>
+     <g transform="translate(285, 150)">
+       <rect x="-15" y="35" width="30" height="55" rx="8" fill="#FFFFFF" stroke="#3D262A" stroke-width="1.5"/>
+       <polygon points="-4,35 4,35 0,55" fill="#C72C35"/>
+       <circle cx="0" cy="15" r="18" fill="#FFDFC4" stroke="#3D262A" stroke-width="1.5"/>
+       <path d="M-20,15 C-20,-10 20,-10 20,15 C10,5 -10,5 -20,15 Z" fill="#3E2723"/>
+       <ellipse cx="-20" cy="12" rx="5" ry="10" fill="#3E2723"/>
+       <ellipse cx="20" cy="12" rx="5" ry="10" fill="#3E2723"/>
+       <circle cx="-6" cy="15" r="2" fill="#2C2C2C"/>
+       <circle cx="6" cy="15" r="2" fill="#2C2C2C"/>
+       <path d="M-3,22 Q0,26 3,22" stroke="#2C2C2C" stroke-width="1" fill="none"/>
+       <ellipse cx="-10" cy="18" rx="3.5" ry="2" fill="#FF8FA3" opacity="0.7"/>
+       <ellipse cx="10" cy="18" rx="3.5" ry="2" fill="#FF8FA3" opacity="0.7"/>
+     </g>
+     <path d="M190,170 Q200,160 210,170 Q200,185 190,170 Z" fill="#E91E63"/>
+     
+</svg>

@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs>
+    <linearGradient id="brassGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE082"/>
+      <stop offset="50%" stop-color="#FFB300"/>
+      <stop offset="100%" stop-color="#E65100"/>
+    </linearGradient>
+    <linearGradient id="paagRed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EF5350"/>
+      <stop offset="50%" stop-color="#C62828"/>
+      <stop offset="100%" stop-color="#8E0000"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Assamese Xorai (Left) -->
+  <g id="assamese-xorai" transform="translate(110, 160)">
+    <!-- Base Plate -->
+    <ellipse cx="0" cy="50" rx="45" ry="12" fill="url(#brassGold)" stroke="#6D4C41" stroke-width="1.5"/>
+    <ellipse cx="0" cy="46" rx="38" ry="9" fill="#FFF8E1"/>
+    <!-- Stem / Stand -->
+    <path d="M-8,46 L-6,10 L6,10 L8,46 Z" fill="url(#brassGold)" stroke="#6D4C41" stroke-width="1.5"/>
+    <!-- Mid ring -->
+    <rect x="-12" y="24" width="24" height="6" rx="3" fill="url(#brassGold)" stroke="#6D4C41" stroke-width="1"/>
+    <!-- Top Tray (Offering Dish) -->
+    <ellipse cx="0" cy="8" rx="55" ry="16" fill="url(#brassGold)" stroke="#6D4C41" stroke-width="1.5"/>
+    <!-- Tamul-Paan (Betel nut & leaf offering) -->
+    <path d="M-20,0 C-10,-12 10,-12 20,0 C10,10 -10,10 -20,0 Z" fill="#4CAF50"/>
+    <circle cx="-5" cy="0" r="5" fill="#8D6E63"/>
+    <circle cx="6" cy="-2" r="5" fill="#8D6E63"/>
+    <!-- Conical Lid / Jaapi Top of Xorai -->
+    <path d="M-36,4 C-30,-25 0,-50 0,-50 C0,-50 30,-25 36,4 Z" fill="url(#brassGold)" stroke="#6D4C41" stroke-width="1.5"/>
+    <circle cx="0" cy="-52" r="4" fill="#FFD54F" stroke="#6D4C41" stroke-width="1"/>
+    <!-- Phulam Gamosa cloth draping beneath -->
+    <path d="M-35,16 Q-10,32 10,22 Q35,30 45,18 L48,34 Q20,40 -10,34 L-38,30 Z" fill="#FFFFFF" stroke="#C72C35" stroke-width="1.5"/>
+    <line x1="-30" y1="22" x2="-28" y2="30" stroke="#C72C35" stroke-width="1.5"/>
+    <line x1="-15" y1="24" x2="-13" y2="32" stroke="#C72C35" stroke-width="1.5"/>
+    <line x1="5" y1="24" x2="7" y2="33" stroke="#C72C35" stroke-width="1.5"/>
+    <line x1="25" y1="23" x2="27" y2="31" stroke="#C72C35" stroke-width="1.5"/>
+  </g>
+
+  <!-- Kopou Phool (Foxtail Orchid) Branch between them -->
+  <g id="kopou-phool" transform="translate(195, 90)">
+    <!-- Vine -->
+    <path d="M0,0 Q15,40 5,80 Q-5,110 5,140" stroke="#388E3C" stroke-width="2.5" fill="none"/>
+    <!-- Delicate Pink Orchid Blossoms cascading -->
+    <g fill="#F48FB1" stroke="#AD1457" stroke-width="0.8">
+      <ellipse cx="6" cy="20" rx="7" ry="5"/>
+      <ellipse cx="-4" cy="35" rx="8" ry="6"/>
+      <ellipse cx="10" cy="50" rx="9" ry="6"/>
+      <ellipse cx="-2" cy="68" rx="9" ry="6"/>
+      <ellipse cx="8" cy="85" rx="8" ry="5"/>
+      <ellipse cx="-1" cy="102" rx="7" ry="5"/>
+      <ellipse cx="6" cy="118" rx="6" ry="4"/>
+      <ellipse cx="3" cy="132" rx="4" ry="3"/>
+    </g>
+    <!-- Purple Orchid Lip Details -->
+    <circle cx="6" cy="21" r="2" fill="#880E4F"/>
+    <circle cx="-4" cy="36" r="2.5" fill="#880E4F"/>
+    <circle cx="10" cy="51" r="2.5" fill="#880E4F"/>
+    <circle cx="-2" cy="69" r="2.5" fill="#880E4F"/>
+    <circle cx="8" cy="86" r="2" fill="#880E4F"/>
+  </g>
+
+  <!-- Maithili Groom's Paag (Right) -->
+  <g id="maithili-paag" transform="translate(290, 150)">
+    <!-- Red Fabric Base of Paag -->
+    <path d="M-45,30 C-48,5 -30,-25 0,-30 C30,-25 48,5 45,30 C20,38 -20,38 -45,30 Z" fill="url(#paagRed)" stroke="#5D1013" stroke-width="2"/>
+    <!-- Distinctive Mithila Fold / Crest Ridge -->
+    <path d="M-28,-15 C-10,-40 10,-40 28,-15 C10,-22 -10,-22 -28,-15 Z" fill="#FFE082" stroke="#B78103" stroke-width="1.5"/>
+    <!-- Intricate Gold Brocade Borders (Zari embroidery) -->
+    <path d="M-40,24 C-20,32 20,32 40,24" stroke="#FFD54F" stroke-width="3" fill="none"/>
+    <path d="M-36,16 C-18,24 18,24 36,16" stroke="#FFD54F" stroke-width="2" fill="none"/>
+    <!-- Central Jewel / Kalangi Brooch -->
+    <circle cx="0" cy="2" r="7" fill="#E65100" stroke="#FFD54F" stroke-width="1.5"/>
+    <circle cx="0" cy="2" r="3.5" fill="#FFFFFF"/>
+    <!-- Gold Tassel / Chamar Feather rising -->
+    <path d="M0,-30 Q-5,-50 -15,-65 Q5,-55 2,-32" fill="#FFECB3" stroke="#FFA000" stroke-width="1"/>
+    <!-- Side Gold Drops -->
+    <circle cx="-42" cy="32" r="3" fill="#FFD54F"/>
+    <circle cx="42" cy="32" r="3" fill="#FFD54F"/>
+  </g>
+
+  <!-- Bottom Cultural Label -->
+  <text x="200" y="275" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-size="14" font-weight="600" fill="#6E4750" letter-spacing="2">
+    ASSAM &amp; MITHILA HERITAGE
+  </text>
+</svg>

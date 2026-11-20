@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>#pooshu RSVP Admin Console — Pooja & Shubham</title>
+  <link rel="icon" type="image/png" href="assets/pooshu_logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --admin-bg: #FAF6F0;
+      --admin-card: #FFFFFF;
+      --admin-wine: #3A141B;
+      --admin-gold: #C49C35;
+      --admin-gold-light: #ECC880;
+      --admin-text: #2D1016;
+      --admin-muted: #6E5459;
+      --admin-border: rgba(196, 156, 53, 0.35);
+    }
+
+    body.admin-body {
+      background: var(--admin-bg);
+      color: var(--admin-text);
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    /* Top Admin Bar */
+    .admin-navbar {
+      background: linear-gradient(135deg, rgba(58, 20, 27, 0.98) 0%, rgba(35, 10, 15, 0.99) 100%);
+      border-bottom: 2px solid var(--admin-gold);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .admin-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #FFFDF9;
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: 1px;
+    }
+
+    .admin-brand-logo {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .admin-nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-admin-link {
+      color: var(--admin-gold-light);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border: 1px solid rgba(196, 156, 53, 0.5);
+      border-radius: 18px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-admin-link:hover {
+      background: rgba(196, 156, 53, 0.2);
+      color: #FFFDF9;
+      border-color: var(--admin-gold-light);
+    }
+
+    .btn-admin-logout {
+      background: rgba(255, 255, 255, 0.1);
+      color: #FFFDF9;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 18px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-admin-logout:hover {
+      background: #C72C35;
+      border-color: #C72C35;
+    }
+
+    /* Container */
+    .admin-container {
+      max-width: 1240px;
+      margin: 30px auto;
+      padding: 0 20px 60px;
+    }
+
+    /* Login Card */
+    .admin-login-wrapper {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .admin-login-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--admin-gold);
+      border-radius: 20px;
+      box-shadow: 0 15px 45px rgba(58, 20, 27, 0.15);
+      width: 100%;
+      max-width: 440px;
+      padding: 38px 32px;
+      text-align: center;
+      animation: fadeInPop 0.4s ease-out;
+    }
+
+    .login-crest {
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 16px;
+      margin-bottom: 14px;
+      filter: drop-shadow(0 4px 10px rgba(196, 156, 53, 0.35));
+    }
+
+    .login-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--admin-wine);
+      margin: 0 0 6px;
+    }
+
+    .login-subtitle {
+      font-size: 0.86rem;
+      color: var(--admin-muted);
+      margin: 0 0 24px;
+    }
+
+    .login-input-group {
+      text-align: left;
+      margin-bottom: 16px;
+    }
+
+    .login-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--admin-wine);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .login-input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px 14px;
+      border: 1.5px solid rgba(196, 156, 53, 0.4);
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--admin-text);
+      transition: all 0.2s ease;
+      background: #FFFDFB;
+    }
+
+    .login-input:focus {
+      outline: none;
+      border-color: var(--admin-gold);
+      box-shadow: 0 0 0 3px rgba(196, 156, 53, 0.25);
+    }
+
+    .btn-login-submit {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(135deg, #ECC880 0%, #D4AF37 50%, #B8860B 100%);
+      color: #2D1016;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+      transition: all 0.2s ease;
+      margin-top: 10px;
+    }
+
+    .btn-login-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+    }
+
+    .login-error {
+      color: #C72C35;
+      font-size: 0.84rem;
+      font-weight: 600;
+      margin-top: 12px;
+      display: none;
+    }
+
+    .login-hint {
+      margin-top: 18px;
+      font-size: 0.78rem;
+      color: #8C7578;
+      background: #FDF9F3;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px dashed rgba(196, 156, 53, 0.4);
+    }
+
+    /* Metric Cards Grid */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .metric-card {
+      background: #FFFFFF;
+      border: 1px solid var(--admin-border);
+      border-radius: 14px;
+      padding: 18px 16px;
+      box-shadow: 0 4px 15px rgba(58, 20, 27, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #ECC880, #D4AF37);
+    }
+
+    .metric-card.accent-green::before { background: #2E7D32; }
+    .metric-card.accent-rose::before { background: #D81B60; }
+    .metric-card.accent-amber::before { background: #F57C00; }
+    .metric-card.accent-purple::before { background: #7B1FA2; }
+
+    .metric-label {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--admin-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 6px;
+    }
+
+    .metric-value {
+      font-family: 'Cinzel', serif;
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--admin-wine);
+      line-height: 1;
+    }
+
+    .metric-sub {
+      font-size: 0.74rem;
+      color: #8C7578;
+      margin-top: 4px;
+    }
+
+    /* Action Bar */
+    .admin-action-bar {
+      background: #FFFFFF;
+      border: 1px solid var(--admin-border);
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 15px rgba(58, 20, 27, 0.04);
+    }
+
+    .search-filter-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1 1 320px;
+    }
+
+    .admin-search-input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1.5px solid rgba(196, 156, 53, 0.35);
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      background: #FFFDFB;
+    }
+
+    .admin-filter-select {
+      padding: 10px 12px;
+      border: 1.5px solid rgba(196, 156, 53, 0.35);
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      background: #FFFDFB;
+      color: var(--admin-text);
+      cursor: pointer;
+    }
+
+    .export-btn-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-export-excel {
+      background: linear-gradient(135deg, #1D6F42 0%, #155734 100%);
+      color: #FFFFFF;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(29, 111, 66, 0.3);
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-export-excel:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(29, 111, 66, 0.45);
+      color: #FFFFFF;
+    }
+
+    .btn-export-csv {
+      background: #FFFFFF;
+      color: var(--admin-wine);
+      border: 1.5px solid var(--admin-gold);
+      padding: 9px 16px;
+      border-radius: 10px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-export-csv:hover {
+      background: #FDF9F0;
+      border-color: #B8860B;
+    }
+
+    .btn-refresh-data {
+      background: #F2ECE1;
+      color: var(--admin-wine);
+      border: 1px solid rgba(196, 156, 53, 0.4);
+      padding: 9px 14px;
+      border-radius: 10px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-refresh-data:hover {
+      background: #E8DECE;
+    }
+
+    /* Table */
+    .table-responsive-card {
+      background: #FFFFFF;
+      border: 1px solid var(--admin-border);
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(58, 20, 27, 0.05);
+      overflow-x: auto;
+    }
+
+    .rsvp-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+
+    .rsvp-table th {
+      background: #FAF4EB;
+      color: var(--admin-wine);
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 14px 18px;
+      border-bottom: 2px solid var(--admin-border);
+      white-space: nowrap;
+    }
+
+    .rsvp-table td {
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(196, 156, 53, 0.15);
+      color: var(--admin-text);
+      vertical-align: middle;
+    }
+
+    .rsvp-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .rsvp-table tr:hover td {
+      background: #FDFBF7;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .badge-attending-yes {
+      background: #E8F5E9;
+      color: #1B5E20;
+      border: 1px solid rgba(46, 125, 50, 0.3);
+    }
+
+    .badge-attending-no {
+      background: #FFEBEE;
+      color: #B71C1C;
+      border: 1px solid rgba(183, 28, 28, 0.3);
+    }
+
+    .badge-side-bride {
+      background: #FCE4EC;
+      color: #880E4F;
+      border: 1px solid rgba(136, 14, 79, 0.3);
+    }
+
+    .badge-side-groom {
+      background: #FFF8E1;
+      color: #B78103;
+      border: 1px solid rgba(183, 129, 3, 0.3);
+    }
+
+    .badge-side-mutual {
+      background: #EDE7F6;
+      color: #4A148C;
+      border: 1px solid rgba(74, 20, 140, 0.3);
+    }
+
+    .guest-count-pill {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+      text-align: center;
+      background: #FAF0E1;
+      color: #8A641A;
+      font-weight: 800;
+      border-radius: 50%;
+      border: 1px solid rgba(196, 156, 53, 0.4);
+    }
+
+    .song-pill {
+      font-style: italic;
+      color: #55333A;
+      max-width: 220px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: block;
+    }
+
+    .date-subtext {
+      font-size: 0.75rem;
+      color: var(--admin-muted);
+    }
+
+    .table-empty-notice {
+      text-align: center;
+      padding: 50px 20px;
+      color: var(--admin-muted);
+    }
+
+    @keyframes fadeInPop {
+      0% { opacity: 0; transform: scale(0.96); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body class="admin-body">
+
+  <!-- ======================================================================
+       LOGIN VIEW (SHOWN WHEN NOT AUTHENTICATED)
+       ====================================================================== -->
+  <div id="admin-login-view" class="admin-login-wrapper">
+    <div class="admin-login-card">
+      <img src="assets/pooshu_logo.png" alt="#pooshu Crest" class="login-crest">
+      <h1 class="login-title">#pooshu RSVP Portal</h1>
+      <p class="login-subtitle">Pooja &amp; Shubham Wedding Administration Console</p>
+
+      <form id="admin-login-form">
+        <div class="login-input-group">
+          <label class="login-label" for="login-username">Admin User ID</label>
+          <input type="text" id="login-username" class="login-input" placeholder="Enter Login ID" autocomplete="username" required>
+        </div>
+
+        <div class="login-input-group">
+          <label class="login-label" for="login-password">Password</label>
+          <input type="password" id="login-password" class="login-input" placeholder="Enter Password" autocomplete="current-password" required>
+        </div>
+
+        <button type="submit" class="btn-login-submit">Authenticate Access</button>
+        <div id="login-error-msg" class="login-error">Invalid Login ID or Password. Please try again.</div>
+      </form>
+
+      <div class="login-hint">
+        🔒 Default Credentials: <strong>admin</strong> / <strong>PooShu#2026!Royal</strong>
+      </div>
+      <div style="margin-top: 14px;">
+        <a href="/" style="color: var(--admin-gold); font-size: 0.82rem; text-decoration: none; font-weight: 600;">← Back to Wedding Invitation</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       DASHBOARD VIEW (SHOWN WHEN AUTHENTICATED)
+       ====================================================================== -->
+  <div id="admin-dashboard-view" style="display: none;">
+    <!-- Top Navigation -->
+    <header class="admin-navbar">
+      <div class="admin-brand">
+        <img src="assets/pooshu_logo.png" alt="Logo" class="admin-brand-logo">
+        <span>#POOSHU • RSVP Executive Management</span>
+      </div>
+      <div class="admin-nav-actions">
+        <a href="/" class="btn-admin-link">← Live Site</a>
+        <button type="button" class="btn-admin-logout" id="btn-admin-logout">Sign Out</button>
+      </div>
+    </header>
+
+    <div class="admin-container">
+
+      <!-- Summary Metrics Grid -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-label">Total RSVPs</div>
+          <div class="metric-value" id="stat-total-count">0</div>
+          <div class="metric-sub">Registered responses</div>
+        </div>
+
+        <div class="metric-card accent-green">
+          <div class="metric-label">Joyfully Attending</div>
+          <div class="metric-value" id="stat-attending-count" style="color: #2E7D32;">0</div>
+          <div class="metric-sub" id="stat-attending-pct">0% conversion</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-label">Declined</div>
+          <div class="metric-value" id="stat-declined-count" style="color: #8C7578;">0</div>
+          <div class="metric-sub">Regretfully unable</div>
+        </div>
+
+        <div class="metric-card accent-purple">
+          <div class="metric-label">Total Guests</div>
+          <div class="metric-value" id="stat-total-guests" style="color: #6A1B9A;">0</div>
+          <div class="metric-sub">Attending head-count</div>
+        </div>
+
+        <div class="metric-card accent-rose">
+          <div class="metric-label">Bride's Guests</div>
+          <div class="metric-value" id="stat-bride-count" style="color: #AD1457;">0</div>
+          <div class="metric-sub">Pooja Haloi's side</div>
+        </div>
+
+        <div class="metric-card accent-amber">
+          <div class="metric-label">Groom's Guests</div>
+          <div class="metric-value" id="stat-groom-count" style="color: #E65100;">0</div>
+          <div class="metric-sub">Shubham Thakur's side</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-label">Mutual Guests</div>
+          <div class="metric-value" id="stat-mutual-count" style="color: #3A141B;">0</div>
+          <div class="metric-sub">Friends of both</div>
+        </div>
+      </div>
+
+      <!-- Action Bar -->
+      <div class="admin-action-bar">
+        <div class="search-filter-group">
+          <input type="text" id="admin-search-input" class="admin-search-input" placeholder="🔍 Search by guest name, side, or song...">
+          <select id="admin-filter-select" class="admin-filter-select">
+            <option value="all">All Responses</option>
+            <option value="attending">Attending Only</option>
+            <option value="declined">Declined Only</option>
+            <option value="bride">Bride's Guests</option>
+            <option value="groom">Groom's Guests</option>
+            <option value="mutual">Mutual Guests</option>
+          </select>
+        </div>
+
+        <div class="export-btn-group">
+          <a href="/api/rsvps/download-excel" class="btn-export-excel" id="btn-export-excel" download>
+            📊 Download Excel (.xlsx)
+          </a>
+          <a href="/api/rsvps/download-csv" class="btn-export-csv" id="btn-export-csv" download>
+            📄 Download CSV
+          </a>
+          <button type="button" class="btn-refresh-data" id="btn-refresh-data">
+            🔄 Refresh
+          </button>
+        </div>
+      </div>
+
+      <!-- RSVPs Data Table Card -->
+      <div class="table-responsive-card">
+        <table class="rsvp-table" id="rsvps-table">
+          <thead>
+            <tr>
+              <th style="width: 50px;">#</th>
+              <th>Guest Full Name</th>
+              <th>Side / Affiliation</th>
+              <th>Attendance Status</th>
+              <th>Guests</th>
+              <th>DJ Song Request</th>
+              <th>Submitted At</th>
+            </tr>
+          </thead>
+          <tbody id="rsvps-table-body">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+        <div id="table-empty-notice" class="table-empty-notice" style="display: none;">
+          <p style="font-size: 1.1rem; font-weight: 600; margin-bottom: 6px;">No RSVP records found matching your filter</p>
+          <span style="font-size: 0.85rem;">Try adjusting your search query or filter selection.</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Admin Console JavaScript Controller
+    (function () {
+      let rsvpsData = [];
+      const AUTH_KEY = 'pooshu_admin_authenticated';
+
+      const loginView = document.getElementById('admin-login-view');
+      const dashboardView = document.getElementById('admin-dashboard-view');
+      const loginForm = document.getElementById('admin-login-form');
+      const errorMsg = document.getElementById('login-error-msg');
+      const logoutBtn = document.getElementById('btn-admin-logout');
+      const refreshBtn = document.getElementById('btn-refresh-data');
+      const searchInput = document.getElementById('admin-search-input');
+      const filterSelect = document.getElementById('admin-filter-select');
+      const tableBody = document.getElementById('rsvps-table-body');
+      const emptyNotice = document.getElementById('table-empty-notice');
+
+      // Check existing session
+      function checkAuth() {
+        if (sessionStorage.getItem(AUTH_KEY) === 'true') {
+          showDashboard();
+        } else {
+          showLogin();
+        }
+      }
+
+      function showLogin() {
+        loginView.style.display = 'flex';
+        dashboardView.style.display = 'none';
+      }
+
+      function showDashboard() {
+        loginView.style.display = 'none';
+        dashboardView.style.display = 'block';
+        fetchRsvps();
+      }
+
+      // Handle Login
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const username = document.getElementById('login-username').value.trim();
+        const password = document.getElementById('login-password').value.trim();
+
+        try {
+          const res = await fetch('/api/admin/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+          });
+          const result = await res.json();
+
+          if (result.success) {
+            sessionStorage.setItem(AUTH_KEY, 'true');
+            errorMsg.style.display = 'none';
+            showDashboard();
+          } else {
+            errorMsg.textContent = result.error || 'Invalid credentials. Please try again.';
+            errorMsg.style.display = 'block';
+          }
+        } catch (err) {
+          // Client-side fallback check if local server offline
+          if (username === 'admin' && password === 'PooShu#2026!Royal') {
+            sessionStorage.setItem(AUTH_KEY, 'true');
+            showDashboard();
+          } else {
+            errorMsg.textContent = 'Authentication failed. Please verify credentials.';
+            errorMsg.style.display = 'block';
+          }
+        }
+      });
+
+      // Handle Logout
+      logoutBtn.addEventListener('click', () => {
+        sessionStorage.removeItem(AUTH_KEY);
+        showLogin();
+      });
+
+      // Fetch RSVPs
+      async function fetchRsvps() {
+        try {
+          const res = await fetch('/api/rsvps');
+          rsvpsData = await res.json();
+          renderStats(rsvpsData);
+          renderTable();
+        } catch (e) {
+          console.error('Failed to load RSVPs:', e);
+        }
+      }
+
+      refreshBtn.addEventListener('click', () => {
+        refreshBtn.textContent = '🔄 Loading...';
+        fetchRsvps().then(() => {
+          setTimeout(() => { refreshBtn.textContent = '🔄 Refresh'; }, 400);
+        });
+      });
+
+      // Calculate and Render Metrics
+      function renderStats(list) {
+        const total = list.length;
+        let attending = 0;
+        let declined = 0;
+        let totalGuests = 0;
+        let brideCount = 0;
+        let groomCount = 0;
+        let mutualCount = 0;
+
+        list.forEach(item => {
+          const isAttending = item.attending !== 'no';
+          if (isAttending) {
+            attending++;
+            totalGuests += parseInt(item.guestCount, 10) || 1;
+          } else {
+            declined++;
+          }
+
+          if (item.side === 'bride') brideCount++;
+          else if (item.side === 'groom') groomCount++;
+          else mutualCount++;
+        });
+
+        document.getElementById('stat-total-count').textContent = total;
+        document.getElementById('stat-attending-count').textContent = attending;
+        document.getElementById('stat-attending-pct').textContent = total > 0 ? `${Math.round((attending / total) * 100)}% conversion` : '0%';
+        document.getElementById('stat-declined-count').textContent = declined;
+        document.getElementById('stat-total-guests').textContent = totalGuests;
+        document.getElementById('stat-bride-count').textContent = brideCount;
+        document.getElementById('stat-groom-count').textContent = groomCount;
+        document.getElementById('stat-mutual-count').textContent = mutualCount;
+      }
+
+      // Filter and Render Table
+      function renderTable() {
+        const query = searchInput.value.toLowerCase().trim();
+        const filter = filterSelect.value;
+
+        const filtered = rsvpsData.filter(item => {
+          // Status filter
+          if (filter === 'attending' && item.attending === 'no') return false;
+          if (filter === 'declined' && item.attending !== 'no') return false;
+          if (filter === 'bride' && item.side !== 'bride') return false;
+          if (filter === 'groom' && item.side !== 'groom') return false;
+          if (filter === 'mutual' && item.side !== 'mutual') return false;
+
+          // Search query
+          if (query) {
+            const nameMatch = (item.name || '').toLowerCase().includes(query);
+            const songMatch = (item.djSong || '').toLowerCase().includes(query);
+            const sideMatch = (item.side || '').toLowerCase().includes(query);
+            return nameMatch || songMatch || sideMatch;
+          }
+          return true;
+        });
+
+        tableBody.innerHTML = '';
+
+        if (filtered.length === 0) {
+          emptyNotice.style.display = 'block';
+          return;
+        }
+
+        emptyNotice.style.display = 'none';
+
+        filtered.forEach((item, idx) => {
+          const tr = document.createElement('tr');
+
+          // Side badge
+          let sideBadge = '<span class="badge badge-side-mutual">🤝 Mutual</span>';
+          if (item.side === 'bride') {
+            sideBadge = '<span class="badge badge-side-bride">🌺 Bride (Pooja)</span>';
+          } else if (item.side === 'groom') {
+            sideBadge = '<span class="badge badge-side-groom">🦚 Groom (Shubham)</span>';
+          }
+
+          // Attendance badge
+          const isAttending = item.attending !== 'no';
+          const attendBadge = isAttending
+            ? '<span class="badge badge-attending-yes">✓ Joyfully Accept</span>'
+            : '<span class="badge badge-attending-no">✕ Regretfully Decline</span>';
+
+          // Date format
+          let dateStr = '—';
+          if (item.timestamp) {
+            try {
+              const d = new Date(item.timestamp);
+              dateStr = `${d.toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })} <span class="date-subtext">${d.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}</span>`;
+            } catch (e) {
+              dateStr = item.timestamp;
+            }
+          }
+
+          tr.innerHTML = `
+            <td style="font-weight: 700; color: #8C7578;">${idx + 1}</td>
+            <td style="font-weight: 600; color: #2D1016;">${item.name || 'Honored Guest'}</td>
+            <td>${sideBadge}</td>
+            <td>${attendBadge}</td>
+            <td><span class="guest-count-pill">${item.guestCount || 1}</span></td>
+            <td><span class="song-pill">${item.djSong ? '🎵 ' + item.djSong : '—'}</span></td>
+            <td>${dateStr}</td>
+          `;
+
+          tableBody.appendChild(tr);
+        });
+      }
+
+      searchInput.addEventListener('input', renderTable);
+      filterSelect.addEventListener('change', renderTable);
+
+      // Initialize
+      checkAuth();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "pooshu-wedding-invitation",
+  "version": "1.0.0",
+  "description": "#pooshu Interactive Digital Wedding Website - Assamese & Maithili Heritage Fusion",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "wedding-invitation",
+    "pooshu",
+    "assamese-wedding",
+    "maithili-wedding",
+    "interactive-invitation",
+    "3d-envelope"
+  ],
+  "author": "Antigravity PM Team",
+  "license": "ISC"
+}

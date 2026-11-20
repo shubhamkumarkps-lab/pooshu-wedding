@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 120" width="100%" height="100%" preserveAspectRatio="none">
+  <defs>
+    <pattern id="phulam-repeat" width="160" height="120" patternUnits="userSpaceOnUse">
+      <!-- Top Chevron Chain -->
+      <path d="M0,10 L10,0 L20,10 L30,0 L40,10 L50,0 L60,10 L70,0 L80,10 L90,0 L100,10 L110,0 L120,10 L130,0 L140,10 L150,0 L160,10 L160,16 L150,6 L140,16 L130,6 L120,16 L110,6 L100,16 L90,6 L80,16 L70,6 L60,16 L50,6 L40,16 L30,6 L20,16 L10,6 L0,16 Z" fill="#C72C35"/>
+      <!-- Upper Diamond Border -->
+      <path d="M0,22 L10,32 L20,22 L30,32 L40,22 L50,32 L60,22 L70,32 L80,22 L90,32 L100,22 L110,32 L120,22 L130,32 L140,22 L150,32 L160,22" stroke="#C72C35" stroke-width="2.5" fill="none"/>
+      
+      <!-- Center Tree of Life Motif (Kalpavriksha) -->
+      <g transform="translate(40, 28)">
+        <!-- Trunk -->
+        <rect x="36" y="24" width="8" height="42" fill="#C72C35"/>
+        <!-- Tiered Branches with Diamond Leaves -->
+        <polygon points="40,0 20,20 60,20" fill="#C72C35"/>
+        <polygon points="40,12 14,35 66,35" fill="#C72C35"/>
+        <polygon points="40,24 8,50 72,50" fill="#C72C35"/>
+        <!-- Inner Cutout Florals -->
+        <circle cx="40" cy="14" r="3" fill="#FFF8F2"/>
+        <circle cx="40" cy="28" r="3.5" fill="#FFF8F2"/>
+        <circle cx="28" cy="38" r="2.5" fill="#FFF8F2"/>
+        <circle cx="52" cy="38" r="2.5" fill="#FFF8F2"/>
+      </g>
+      
+      <!-- Sacred Duck / Haho Silhouettes -->
+      <g transform="translate(110, 52)">
+        <path d="M12,22 C6,22 0,16 0,10 C0,4 6,0 12,0 C16,0 20,4 24,10 C28,10 32,7 34,7 C36,7 38,10 36,12 C32,15 28,15 26,18 C22,22 18,22 12,22 Z" fill="#C72C35"/>
+        <circle cx="32" cy="9" r="1.5" fill="#FFF8F2"/>
+        <!-- Feet & Wing Details -->
+        <path d="M8,12 Q14,8 18,14" stroke="#FFF8F2" stroke-width="1.5" fill="none"/>
+      </g>
+      
+      <!-- Flower Rosettes -->
+      <g transform="translate(12, 50)" fill="#C72C35">
+        <circle cx="10" cy="10" r="4"/>
+        <circle cx="10" cy="3" r="3"/>
+        <circle cx="10" cy="17" r="3"/>
+        <circle cx="3" cy="10" r="3"/>
+        <circle cx="17" cy="10" r="3"/>
+      </g>
+
+      <!-- Bottom Geometric Border -->
+      <line x1="0" y1="102" x2="160" y2="102" stroke="#C72C35" stroke-width="2"/>
+      <path d="M0,114 L8,106 L16,114 L24,106 L32,114 L40,106 L48,114 L56,106 L64,114 L72,106 L80,114 L88,106 L96,114 L104,106 L112,114 L120,106 L128,114 L136,106 L144,114 L152,106 L160,114" stroke="#C72C35" stroke-width="2.5" fill="none"/>
+      <line x1="0" y1="118" x2="160" y2="118" stroke="#C72C35" stroke-width="2"/>
+    </pattern>
+  </defs>
+  <rect width="100%" height="120" fill="url(#phulam-repeat)"/>
+</svg>

@@ -1,0 +1,758 @@
+import json
+
+# 1. GENERATE INDEX.HTML
+petals_markup = ""
+for i in range(12):
+    deg = i * 30
+    petals_markup += f'''              <g class="flower-petal-group petal-{i}" data-index="{i}" transform="translate(70, 70) rotate({deg})">
+                <path class="flower-petal-path" d="M 0,-62 C 6,-54 7,-46 0,-42 C -7,-46 -6,-54 0,-62 Z" />
+                <circle cx="0" cy="-60" r="1.8" class="petal-stamen" />
+              </g>\n'''
+
+html_content = f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>Pooja &amp; Shubham | Wedding Invitation #pooshu</title>
+  <meta name="description" content="Celebrating the wedding union of Pooja Haloi &amp; Shubham Kumar Thakur. Two Cultures, One Eternal Promise.">
+  <link rel="icon" type="image/png" href="assets/pooshu_logo.png">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Pooja &amp; Shubham | Wedding Invitation #pooshu">
+  <meta property="og:description" content="Two Cultures, One Eternal Promise. Dec 02, 2026.">
+  <meta property="og:image" content="assets/hero_photo.jpg">
+  <meta property="og:type" content="website">
+
+  <!-- Master Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Ambient Wedding Flower Particles Canvas (Releases delicate flowers on click/tap) -->
+  <canvas id="flower-particles-canvas"></canvas>
+
+  <!-- ======================================================================
+       1. WELCOME PAGE: AUTHENTIC EMBOSSED WEDDING ENVELOPE & FLOWER LOADER
+       ====================================================================== -->
+  <div class="welcome-overlay" id="welcome-overlay">
+    <div class="welcome-glow-ambient"></div>
+
+    <div class="envelope-floating-wrapper" id="envelope-float-wrap">
+      <div class="envelope-3d-scene" id="envelope-scene">
+        
+        <!-- Authentic Textured Wedding Envelope Card -->
+        <div class="envelope-3d-card" id="envelope-3d-card">
+
+          <!-- Layered Invitation Cards Stack (Nest inside and emerge upward in 3D) -->
+          <div class="floating-cards-stack" id="floating-cards-stack">
+            <!-- Card 3 (Back): Sacred Cultural Blessing -->
+            <div class="emerge-card card-layer-3">
+              <span class="card-eyebrow-text">DIVINE BLESSINGS</span>
+              <div class="card-title-text">Shree Ganeshay Namah</div>
+              <div class="card-sub-text">Assamese &amp; Maithili Traditions</div>
+            </div>
+
+            <!-- Card 2 (Middle): Cultural Heritage Union -->
+            <div class="emerge-card card-layer-2">
+              <span class="card-eyebrow-text" style="color: #C72C35;">CELEBRATION</span>
+              <div class="card-title-text">Two Cultures, One Eternal Promise</div>
+              <div class="card-sub-text">A 12-Year Love Story</div>
+            </div>
+
+            <!-- Card 1 (Front): Royal Save The Date -->
+            <div class="emerge-card card-layer-1">
+              <div class="emerge-monogram">
+                <img src="assets/pooshu_logo.png" alt="PooShu Emblem" class="emerge-logo-img">
+              </div>
+              <div class="emerge-names">Pooja &amp; Shubham</div>
+              <div class="emerge-date">Wednesday, Dec 02, 2026</div>
+            </div>
+          </div>
+
+          <!-- Real Physical Embossed Wedding Envelope Face Image -->
+          <img src="assets/envelope_real.png" alt="Royal Wedding Envelope" class="envelope-real-img" id="envelope-real-img">
+
+          <!-- Wax Seal & Blooming Flower Loader on Flap Medallion -->
+          <div class="seal-interaction-box" id="wax-seal-btn" title="Press &amp; Hold to Unveil">
+            <svg class="flower-blooming-loader" id="flower-blooming-svg" viewBox="0 0 140 140" aria-hidden="true">
+              <defs>
+                <linearGradient id="petal-bloom-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#FFE082" />
+                  <stop offset="45%" stop-color="#FFB300" />
+                  <stop offset="85%" stop-color="#E91E63" />
+                  <stop offset="100%" stop-color="#C2185B" />
+                </linearGradient>
+                <linearGradient id="vine-track-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#ECC880" />
+                  <stop offset="50%" stop-color="#FFD54F" />
+                  <stop offset="100%" stop-color="#D4AF37" />
+                </linearGradient>
+              </defs>
+
+              <!-- 12 Radiating Flower Petals -->
+              <g id="flower-petals-ring">
+{petals_markup}              </g>
+
+              <!-- Circular Vine Progress Ring Track & Bar (r=50, circumference 314) -->
+              <circle cx="70" cy="70" r="50" class="flower-ring-track" />
+              <circle cx="70" cy="70" r="50" class="flower-ring-progress" id="seal-flower-progress" />
+            </svg>
+
+            <!-- Metallic Gold Wax Seal Disc with Clean Circle Crop -->
+            <div class="wax-seal-disc" id="wax-seal-disc">
+              <img src="assets/wax_seal_real.png" alt="PooShu Wax Seal" class="wax-seal-img">
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Instruction Hint with Live Blooming Percentage -->
+    <div class="welcome-action-hint">
+      <p class="hint-title" id="env-instruction">Press &amp; Hold to Unveil</p>
+      <div class="hint-progress-badge" id="flower-status-text">Hold to Unveil</div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       2. MAIN SITE WRAPPER (FULL DESKTOP & PHONE RESPONSIVE)
+       ====================================================================== -->
+  <div class="site-wrapper">
+
+    <!-- Top Sticky Navigation Bar (Single Bar, Compact, No Emojis, No Wrapping) -->
+    <header class="top-nav-bar">
+      <div class="site-container">
+        <div class="top-nav-inner">
+          <div class="nav-brand" id="nav-brand-btn" onclick="window.pooshuApp.navigateToPage('home')">
+            <img src="assets/pooshu_logo.png" alt="PooShu Crest" class="nav-brand-logo">
+            #<span>pooshu</span>
+          </div>
+
+          <!-- Desktop Navigation Menu Links (No Emojis, Single Row) -->
+          <nav class="nav-menu-links">
+            <button type="button" class="nav-link-btn active" data-nav="home" onclick="window.pooshuApp.navigateToPage('home')">
+              The Wedding
+            </button>
+            <button type="button" class="nav-link-btn" data-nav="bride" onclick="window.pooshuApp.navigateToPage('bride')">
+              Know the Bride
+            </button>
+            <button type="button" class="nav-link-btn" data-nav="groom" onclick="window.pooshuApp.navigateToPage('groom')">
+              Know the Groom
+            </button>
+            <button type="button" class="nav-link-btn" data-nav="story" onclick="window.pooshuApp.navigateToPage('story')">
+              Our Story
+            </button>
+            <a href="#section-events" class="nav-link-btn" onclick="window.pooshuApp.navigateToPage('home')">
+              Events
+            </a>
+            <a href="#section-rsvp" class="nav-link-btn" onclick="window.pooshuApp.navigateToPage('home')">
+              RSVP
+            </a>
+          </nav>
+
+          <!-- Compact Trilingual Switcher -->
+          <div class="lang-pill-group">
+            <button type="button" class="lang-btn active" data-lang="en">EN</button>
+            <button type="button" class="lang-btn" data-lang="as">অসমীয়া</button>
+            <button type="button" class="lang-btn" data-lang="mai">मैथिली</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Cultural Decorative Border (Phulam Gamosa) -->
+    <div class="cultural-ribbon"></div>
+
+    <!-- ======================================================================
+         PAGE 1: MAIN WEDDING CEREMONY INVITATION (HOMEPAGE)
+         ====================================================================== -->
+    <main id="page-home" class="page-view">
+
+      <!-- ======================================================================
+           3. HERO SECTION (TRANSPARENT PADDING - BACKGROUND FULLY VISIBLE)
+           ====================================================================== -->
+      <section class="hero-wrapper" id="section-hero">
+        <div class="site-container">
+          <div class="hero-grid">
+            
+            <!-- Left Column: Couple Photo Artwork & Heritage Crest -->
+            <div class="hero-visual-card">
+              <div class="hero-photo-frame">
+                <div class="hero-photo-gold-border">
+                  <img src="assets/hero_photo.jpg" alt="Pooja &amp; Shubham" class="hero-photo-img">
+                </div>
+              </div>
+              <div class="hero-crest-badge">
+                <img src="assets/pooshu_logo.png" alt="PooShu Sacred Emblem" class="hero-crest-img">
+              </div>
+              <div class="hero-heritage-badges">
+                <span class="heritage-pill pill-assamese">Assamese Muga &amp; Kopou</span>
+                <span class="heritage-pill pill-maithili">Mithila Paag &amp; Madhubani</span>
+              </div>
+
+              <!-- Dedicated Subpage Quick Links (Clean Text, No Emojis) -->
+              <div class="hero-profile-cta-group">
+                <button type="button" class="btn-profile-cta btn-cta-bride" onclick="window.pooshuApp.navigateToPage('bride')">
+                  Know the Bride: Pooja
+                </button>
+                <button type="button" class="btn-profile-cta btn-cta-groom" onclick="window.pooshuApp.navigateToPage('groom')">
+                  Know the Groom: Shubham
+                </button>
+                <button type="button" class="btn-profile-cta btn-cta-story" onclick="window.pooshuApp.navigateToPage('story')">
+                  Our 12-Year Story
+                </button>
+              </div>
+            </div>
+
+            <!-- Right Column: Ceremonial Invite, Names & Live Countdown -->
+            <div class="hero-content-card">
+              <div class="sacred-invocation-text" id="hero-invocation">
+                Om Sri Ganeshaya Namah • With joyful hearts and the blessings of our parents
+              </div>
+
+              <h1 class="hero-names-title">
+                <span id="hero-bride-name">Pooja Haloi</span>
+                <span class="couple-connector">&amp;</span>
+                <span id="hero-groom-name">Shubham Kumar Thakur</span>
+              </h1>
+
+              <div class="hero-tagline-text" id="hero-tagline">
+                Two Cultures, One Eternal Promise
+              </div>
+
+              <!-- Family Honor Lines -->
+              <div class="family-honor-box">
+                <p class="honor-line" id="hero-bride-line">
+                  Daughter of <strong>Smt. Champa Haloi &amp; Dr. Ajit Kumar Haloi</strong> • Sister of Neha Haloi
+                </p>
+                <p class="honor-line" id="hero-groom-line">
+                  Son of <strong>Smt. Kiran Thakur &amp; Shri Suman Thakur</strong> • Brother of Shivam Thakur
+                </p>
+              </div>
+
+              <p class="formal-invite-text" id="hero-invitation-text">
+                request the honor of your gracious presence as they exchange sacred vows of love, heritage, and togetherness.
+              </p>
+
+              <!-- Integrated Live Countdown Timer -->
+              <div class="hero-countdown-container">
+                <div class="countdown-label" id="countdown-title">
+                  Counting Every Heartbeat Until #pooshu
+                </div>
+                <div class="countdown-grid">
+                  <div class="countdown-tile">
+                    <div class="countdown-num" id="count-days">00</div>
+                    <div class="countdown-unit" id="unit-days">Days</div>
+                  </div>
+                  <div class="countdown-tile">
+                    <div class="countdown-num" id="count-hours">00</div>
+                    <div class="countdown-unit" id="unit-hours">Hours</div>
+                  </div>
+                  <div class="countdown-tile">
+                    <div class="countdown-num" id="count-mins">00</div>
+                    <div class="countdown-unit" id="unit-mins">Mins</div>
+                  </div>
+                  <div class="countdown-tile">
+                    <div class="countdown-num" id="count-secs">00</div>
+                    <div class="countdown-unit" id="unit-secs">Secs</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           4. INTERACTIVE 3-CIRCLE SCRATCH-TO-REVEAL DATE
+           ====================================================================== -->
+      <section class="scratch-section-wrap" id="section-scratch">
+        <div class="site-container">
+          <div class="section-header-center">
+            <div class="section-eyebrow">SAVE THE DATE</div>
+            <h2 class="section-title" id="scratch-heading">Scratch to Reveal our Wedding Date!</h2>
+            <p class="section-description" id="scratch-subheading">
+              A Date to Hold Close — Scratch All Three Circles to Reveal
+            </p>
+          </div>
+
+          <div class="scratch-stage-row">
+            <!-- Left Flanking Cultural Flat Art (Assamese Xorai & Kopou) -->
+            <img src="assets/motifs/assamese_xorai_kopou.svg" alt="Assamese Xorai" class="scratch-flank-motif">
+
+            <!-- Center Scratch Discs Box -->
+            <div class="scratch-center-card">
+              <div class="scratch-discs-container">
+                <!-- Disc 1: Month -->
+                <div class="scratch-disc-item">
+                  <div class="disc-date-underlay">
+                    <span class="underlay-primary">DEC</span>
+                    <span class="underlay-secondary">MONTH</span>
+                  </div>
+                  <canvas id="scratch-month" class="disc-canvas" width="120" height="120"></canvas>
+                </div>
+
+                <!-- Disc 2: Day -->
+                <div class="scratch-disc-item">
+                  <div class="disc-date-underlay">
+                    <span class="underlay-primary">02</span>
+                    <span class="underlay-secondary">WEDNESDAY</span>
+                  </div>
+                  <canvas id="scratch-day" class="disc-canvas" width="120" height="120"></canvas>
+                </div>
+
+                <!-- Disc 3: Year -->
+                <div class="scratch-disc-item">
+                  <div class="disc-date-underlay">
+                    <span class="underlay-primary">2026</span>
+                    <span class="underlay-secondary">YEAR</span>
+                  </div>
+                  <canvas id="scratch-year" class="disc-canvas" width="120" height="120"></canvas>
+                </div>
+              </div>
+
+              <div class="scratch-action-helper">
+                <button type="button" class="btn-reveal-all" id="scratch-reveal-all-btn">Tap to Reveal All</button>
+              </div>
+
+              <div class="scratch-revealed-banner" id="scratch-unlocked-banner">
+                Date Revealed! We cannot wait to celebrate with you!
+              </div>
+            </div>
+
+            <!-- Right Flanking Cultural Flat Art (Mithila Peacocks) -->
+            <img src="assets/motifs/maithili_peacock_lotus.svg" alt="Mithila Peacocks" class="scratch-flank-motif">
+          </div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           5. CEREMONIAL EVENT ITINERARY & GUEST SIDE FILTER
+           ====================================================================== -->
+      <section class="events-section-wrap" id="section-events">
+        <div class="site-container">
+          <div class="section-header-center">
+            <div class="section-eyebrow">ITINERARY &amp; VENUES</div>
+            <h2 class="section-title" id="events-sec-title">Wedding Celebrations</h2>
+            <p class="section-description" id="events-sec-sub">
+              Join us across five memorable ceremonies filled with tradition, music, and love
+            </p>
+          </div>
+
+          <!-- Side Filter Buttons (Clean text) -->
+          <div class="filter-tabs-wrapper">
+            <button type="button" class="filter-tab-pill active" data-filter="all" id="filter-btn-all">All Events</button>
+            <button type="button" class="filter-tab-pill" data-filter="bride" id="filter-btn-bride">Bride's Side</button>
+            <button type="button" class="filter-tab-pill" data-filter="groom" id="filter-btn-groom">Groom's Side</button>
+          </div>
+
+          <!-- Multi-Column Responsive Events Grid -->
+          <div class="events-responsive-grid" id="events-grid-container"></div>
+        </div>
+      </section>
+
+      <!-- ======================================================================
+           6. RSVP SECTION (CENTERED, CLEAN - VIP PASS REMOVED)
+           ====================================================================== -->
+      <section class="rsvp-section-wrap" id="section-rsvp">
+        <div class="site-container">
+          <div class="section-header-center">
+            <div class="section-eyebrow">RSVP</div>
+            <h2 class="section-title" id="rsvp-sec-title">Celebrate With Us</h2>
+            <p class="section-description" id="rsvp-sec-sub">
+              Kindly respond by November 15, 2026 to help us prepare your royal welcome
+            </p>
+          </div>
+
+          <div class="rsvp-centered-container">
+            <div class="rsvp-form-card">
+              <!-- Success Alert Banner (Shown after submission) -->
+              <div class="rsvp-success-banner hidden" id="rsvp-success-banner">
+                <h3 style="font-size: 1.35rem; color: #3D262A; margin-bottom: 6px;">Thank You for Confirming!</h3>
+                <p id="rsvp-success-message" style="color: #6E4750; font-size: 0.95rem; line-height: 1.6;">
+                  Your RSVP has been joyfully recorded. We cannot wait to celebrate #pooshu with you!
+                </p>
+              </div>
+
+              <form id="wedding-rsvp-form">
+                <div class="form-group-field">
+                  <label class="field-label" for="input-fullname" id="lbl-fullname">Your Full Name</label>
+                  <input type="text" id="input-fullname" class="field-input" placeholder="e.g., Ananya Sharma" required>
+                </div>
+
+                <div class="form-group-field">
+                  <label class="field-label" for="select-side" id="lbl-side">Whose Side Are You Joining?</label>
+                  <select id="select-side" class="field-select">
+                    <option value="bride" id="opt-side-bride">Bride's Guest (Pooja Haloi)</option>
+                    <option value="groom" id="opt-side-groom">Groom's Guest (Shubham Thakur)</option>
+                    <option value="mutual" id="opt-side-mutual" selected>Friends of Both / Mutual Guest</option>
+                  </select>
+                </div>
+
+                <div class="form-group-field">
+                  <label class="field-label" id="lbl-attending">Will You Be Attending?</label>
+                  <input type="hidden" id="rsvp-attending-val" value="yes">
+                  <div class="attending-toggle-pills">
+                    <div class="attending-pill selected" data-value="yes" id="opt-attending-yes">Joyfully Accept</div>
+                    <div class="attending-pill" data-value="no" id="opt-attending-no">Regretfully Decline</div>
+                  </div>
+                </div>
+
+                <div class="form-group-field">
+                  <label class="field-label" for="input-guest-count" id="lbl-guest-count">Number of Guests</label>
+                  <input type="number" id="input-guest-count" class="field-input" min="1" max="8" value="1">
+                </div>
+
+                <div class="form-group-field">
+                  <label class="field-label" for="select-dietary" id="lbl-dietary">Dietary Preferences</label>
+                  <select id="select-dietary" class="field-select">
+                    <option value="veg" id="opt-diet-veg" selected>Pure Vegetarian</option>
+                    <option value="nonveg" id="opt-diet-nonveg">Non-Vegetarian</option>
+                    <option value="jain" id="opt-diet-jain">Jain / Special Diet</option>
+                  </select>
+                </div>
+
+                <div class="form-group-field">
+                  <label class="field-label" for="input-djsong" id="lbl-djsong">DJ Song Request</label>
+                  <input type="text" id="input-djsong" class="field-input" placeholder="e.g., London Thumakda / Bihu Fusion">
+                </div>
+
+                <button type="submit" class="btn-submit-rsvp" id="btn-rsvp-submit">
+                  Confirm Your RSVP
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ======================================================================
+         PAGE 2: DEDICATED SUBPAGE — OUR 12-YEAR STORY (MOVED FROM HOMEPAGE)
+         ====================================================================== -->
+    <section id="page-story" class="subpage-view hidden">
+      <div class="site-container">
+        <!-- Subpage Top Bar -->
+        <div class="subpage-nav-bar">
+          <button type="button" class="btn-subpage-back" onclick="window.pooshuApp.navigateToPage('home')">
+            Back to Wedding Invitation
+          </button>
+          <div class="subpage-peer-group">
+            <button type="button" class="btn-subpage-peer" onclick="window.pooshuApp.navigateToPage('bride')">
+              Know the Bride
+            </button>
+            <button type="button" class="btn-subpage-peer" onclick="window.pooshuApp.navigateToPage('groom')">
+              Know the Groom
+            </button>
+          </div>
+        </div>
+
+        <div class="section-header-center">
+          <div class="section-eyebrow">OUR MEMORIES</div>
+          <h2 class="section-title" id="story-sec-title">Our 12-Year Journey</h2>
+          <p class="section-description" id="story-sec-sub">
+            From high school sweethearts in 2014 to tying the knot in 2026
+          </p>
+        </div>
+
+        <!-- Featured Story Card Viewer -->
+        <div class="story-featured-card">
+          <div class="story-card-media">
+            <img id="story-card-img" src="assets/illustrations/story_01_school_2014.svg" alt="Love Story Chapter">
+          </div>
+
+          <div class="story-card-info">
+            <div>
+              <div class="story-meta-header">
+                <span class="year-badge-pill" id="story-card-year">2014</span>
+                <span class="milestone-index-label" id="story-step-indicator">1 / 11</span>
+              </div>
+              <h3 class="story-chapter-title" id="story-card-title">First Bell, First Glance</h3>
+              <h4 class="story-chapter-subtitle" id="story-card-sub">High School Classroom 10-A</h4>
+              <p class="story-chapter-body" id="story-card-desc">
+                It began across wooden benches and shared class notes. Two worlds crossed paths, and a lifelong friendship blossomed.
+              </p>
+            </div>
+
+            <div class="story-carousel-arrows">
+              <button type="button" class="btn-story-nav" id="story-prev-btn" aria-label="Previous Story">‹</button>
+              <div class="story-dot-track" id="story-dots-container"></div>
+              <button type="button" class="btn-story-nav" id="story-next-btn" aria-label="Next Story">›</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Desktop Milestone Quick-Selector Grid -->
+        <div class="story-thumbnails-grid" id="story-thumbnails-container"></div>
+
+        <div style="text-align: center; margin-top: 30px;">
+          <button type="button" class="btn-subpage-back" onclick="window.pooshuApp.navigateToPage('home')">
+            Back to Wedding Invitation
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PAGE 3: DEDICATED SUBPAGE — KNOW THE BRIDE (POOJA HALOI)
+         ====================================================================== -->
+    <section id="page-bride" class="subpage-view hidden">
+      <div class="site-container">
+        <!-- Subpage Top Bar -->
+        <div class="subpage-nav-bar">
+          <button type="button" class="btn-subpage-back" onclick="window.pooshuApp.navigateToPage('home')">
+            Back to Wedding Invitation
+          </button>
+          <button type="button" class="btn-subpage-peer" onclick="window.pooshuApp.navigateToPage('groom')">
+            Explore Shubham's Story
+          </button>
+        </div>
+
+        <!-- Bride Hero Showcase -->
+        <div class="profile-hero-card">
+          <div class="profile-avatar-frame">
+            <img src="assets/hero_photo.jpg" alt="Pooja Haloi" class="profile-avatar-img">
+          </div>
+          <span class="profile-motto-badge" id="bride-page-badge">Assamese Heritage • The Bride</span>
+          <h2 class="profile-title" id="bride-page-title">Pooja Haloi</h2>
+          <div class="profile-subtitle" id="bride-page-subtitle">
+            A journey of grace, warmth, cultural pride, and boundless dreams
+          </div>
+          <p style="font-family: var(--font-base); font-style: italic; color: #997322; font-weight: 600;" id="bride-page-motto">
+            হেঁপাহৰ ৰঙীন সপোন (Dreams woven with pure devotion)
+          </p>
+        </div>
+
+        <!-- 2-Column Info Grid -->
+        <div class="profile-grid-sections">
+          <!-- Cultural Roots -->
+          <div class="profile-info-block">
+            <h3 class="profile-block-heading" id="bride-heritage-title">
+              Cultural Roots &amp; Assamese Traditions
+            </h3>
+            <p style="color: #59616D; font-size: 0.95rem; line-height: 1.7;" id="bride-heritage-text">
+              Rooted in the timeless elegance of Assam, Pooja carries forward the warmth of Phulam Gamosa, the pride of Muga silk, and the auspicious fragrance of Kopou orchids. Her heritage shines through festive Rongali Bihu rhythms, the reverence of Brass Xorai, and heartfelt wedding customs including Joron and Biya Naam.
+            </p>
+          </div>
+
+          <!-- 12-Year Story Perspective -->
+          <div class="profile-info-block">
+            <h3 class="profile-block-heading" id="bride-story-title">
+              The 12-Year Love Story (Her Perspective)
+            </h3>
+            <p style="color: #59616D; font-size: 0.95rem; line-height: 1.7;" id="bride-story-text">
+              What started across high school benches in 2014 was simple and effortless. Over 12 years of exams, college, career dreams, and quiet moments, Shubham became my anchor, my confidant, and my greatest source of joy. Every milestone felt lighter with him by my side.
+            </p>
+          </div>
+
+          <!-- Fun Facts & Quirks -->
+          <div class="profile-info-block">
+            <h3 class="profile-block-heading" id="bride-facts-title">
+              Passions, Quirks &amp; Fun Facts
+            </h3>
+            <ul class="fun-fact-list">
+              <li class="fun-fact-item">
+                <span class="fun-fact-bullet">•</span>
+                <div><strong>The Creative Heart:</strong> An eye for aesthetic design, home warmth, and making every moment memorable.</div>
+              </li>
+              <li class="fun-fact-item">
+                <span class="fun-fact-bullet">•</span>
+                <div><strong>Chai Over Everything:</strong> Cannot start the morning without a steaming cup of handcrafted milk tea.</div>
+              </li>
+              <li class="fun-fact-item">
+                <span class="fun-fact-bullet">•</span>
+                <div><strong>Culinary Pride:</strong> Loves authentic Assamese Maasor Tenga, Khar, and festive homemade Pithas.</div>
+              </li>
+              <li class="fun-fact-item">
+                <span class="fun-fact-bullet">•</span>
+                <div><strong>Favorite Memory:</strong> Shubham surprising her after long exam seasons with comfort food and endless laughter.</div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Family Honor & Blessings -->
+          <div class="profile-info-block">
+            <h3 class="profile-block-heading" id="bride-family-title">
+              Family Honor &amp; Host Line
+            </h3>
+            <p style="color: #59616D; font-size: 0.95rem; line-height: 1.7;" id="bride-family-text">
+              Beloved daughter of <strong>Dr. Ajit Kumar Haloi &amp; Smt. Champa Haloi</strong> • Cherished sister of Neha Haloi.
+            </p>
+            <div style="margin-top: 16px; padding: 14px; background: #FBF0F2; border-radius: 12px; border-left: 3px solid #C72C35;">
+              <p style="font-size: 0.88rem; color: #6E4750; font-style: italic;" id="bride-blessing-text">
+                May Lord Ganesha and the sacred soil of Kamrup bless their lifelong union with boundless joy, health, and prosperity.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+          <button type="button" class="btn-subpage-back" onclick="window.pooshuApp.navigateToPage('home')">
+            Back to Wedding Invitation
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PAGE 4: DEDICATED SUBPAGE — KNOW THE GROOM (SHUBHAM KUMAR THAKUR)
+         ====================================================================== -->
+    <section id="page-groom" class="subpage-view hidden">
+      <div class="site-container">
+        <!-- Subpage Top Bar -->
+        <div class="subpage-nav-bar">
+          <button type="button" class="btn-subpage-back" onclick="window.pooshuApp.navigateToPage('home')">
+            Back to Wedding Invitation
+          </button>
+          <button type="button" class="btn-subpage-peer" onclick="window.pooshuApp.navigateToPage('bride')">
+            Explore Pooja's Story
+          </button>
+        </div>
+
+        <!-- Groom Hero Showcase -->
+        <div class="profile-hero-card">
+          <div class="profile-avatar-frame">
+            <img src="assets/hero_photo.jpg" alt="Shubham Kumar Thakur" class="profile-avatar-img">
+          </div>
+          <span class="profile-motto-badge" id="groom-page-badge" style="border-color: #C49C35; color: #997322; background: #FFF9E6;">
+            Maithili Heritage • The Groom
+          </span>
+          <h2 class="profile-title" id="groom-page-title">Shubham Kumar Thakur</h2>
+          <div class="profile-subtitle" id="groom-page-subtitle">
+            A mind driven by vision, a heart anchored in tradition and loyalty
+          </div>
+          <p style="font-family: var(--font-base); font-style: italic; color: #997322; font-weight: 600;" id="groom-page-motto">
+            मिथिलाक पाग, विद्या ओ संस्कार (Honor, wisdom &amp; sanctity)
+          </p>
+        </div>
+
+        <!-- 2-Column Info Grid -->
+        <div class="profile-grid-sections">
+          <!-- Cultural Roots -->
+          <div class="profile-info-block">
+            <h3 class="profile-block-heading" id="groom-heritage-title">
+              Cultural Roots &amp; Maithili Traditions
+            </h3>
+            <p style="color: #59616D; font-size: 0.95rem; line-height: 1.7;" id="groom-heritage-text">
+              Carrying the legacy of Mithila—the land of Raja Janak and Sita—Shubham takes pride in the honor of the Paag, the cosmic harmony of Kohbar art, and sacred Vedic traditions. His cultural roots represent unwavering integrity, deep respect for elders, and the musical poetry of Maithili Vivah Geet.
+            </p>
+          </div>
+
+          <!-- 12-Year Story Perspective -->
+          <div class="profile-info-block">
+            <h3 class="profile-block-heading" id="groom-story-title">
+              The 12-Year Love Story (His Perspective)
+            </h3>
+            <p style="color: #59616D; font-size: 0.95rem; line-height: 1.7;" id="groom-story-text">
+              The moment I saw Pooja in 2014, my world found its center. Through 12 transformative years—school farewells, engineering challenges, product milestones—her faith in me has been my guiding light. Choosing her forever is the easiest and greatest decision of my life.
+            </p>
+          </div>
+
+          <!-- Fun Facts & Quirks -->
+          <div class="profile-info-block">
+            <h3 class="profile-block-heading" id="groom-facts-title">
+              Passions, Quirks &amp; Fun Facts
+            </h3>
+            <ul class="fun-fact-list">
+              <li class="fun-fact-item">
+                <span class="fun-fact-bullet">•</span>
+                <div><strong>The Visionary Builder:</strong> Passionate technologist and product creator who loves turning complex ideas into magic.</div>
+              </li>
+              <li class="fun-fact-item">
+                <span class="fun-fact-bullet">•</span>
+                <div><strong>Melody Explorer:</strong> Deeply moved by traditional ghazals, regional wedding geet, and vintage melodies.</div>
+              </li>
+              <li class="fun-fact-item">
+                <span class="fun-fact-bullet">•</span>
+                <div><strong>Comfort Food:</strong> Classic Maithili Machh-Bhaat and festive winter tilkuts.</div>
+              </li>
+              <li class="fun-fact-item">
+                <span class="fun-fact-bullet">•</span>
+                <div><strong>Favorite Trait in Pooja:</strong> Her radiant smile that instantly dissolves stress and makes any house feel like home.</div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Family Honor & Blessings -->
+          <div class="profile-info-block">
+            <h3 class="profile-block-heading" id="groom-family-title">
+              Family Honor &amp; Host Line
+            </h3>
+            <p style="color: #59616D; font-size: 0.95rem; line-height: 1.7;" id="groom-family-text">
+              Beloved son of <strong>Shri Suman Thakur &amp; Smt. Kiran Thakur</strong> • Proud brother of Shivam Thakur.
+            </p>
+            <div style="margin-top: 16px; padding: 14px; background: #FFF9E6; border-radius: 12px; border-left: 3px solid #C49C35;">
+              <p style="font-size: 0.88rem; color: #5D4037; font-style: italic;" id="groom-blessing-text">
+                May the divine blessings of Lord Shiva and Mata Parvati grant their journey everlasting companionship, joy, and peace.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+          <button type="button" class="btn-subpage-back" onclick="window.pooshuApp.navigateToPage('home')">
+            Back to Wedding Invitation
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         8. FOOTER & CULTURAL BLESSINGS
+         ====================================================================== -->
+    <footer class="footer-wrap">
+      <div class="site-container">
+        <img src="assets/pooshu_logo.png" alt="PooShu Royal Emblem" class="footer-logo-img">
+        <div class="footer-hashtag-brand">#pooshu</div>
+        <p class="footer-blessing-quote" id="footer-blessing">
+          May Lord Ganesha shower eternal happiness and prosperous beginnings.
+        </p>
+        <p class="footer-copyright" id="footer-credits">
+          Crafted with immense love for Pooja &amp; Shubham
+        </p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ======================================================================
+       9. FLOATING DUAL-SOUNDTRACK CONTROLLER
+       ====================================================================== -->
+  <aside class="floating-soundscape-bar" id="floating-audio-controller">
+    <button type="button" class="audio-btn-circle" id="music-toggle-btn" aria-label="Play / Pause Music">
+      ▶
+    </button>
+    <div class="equalizer-wave">
+      <span class="eq-bar"></span>
+      <span class="eq-bar"></span>
+      <span class="eq-bar"></span>
+    </div>
+    <div class="audio-track-tabs">
+      <button type="button" class="audio-track-tab active" id="track-mai-btn" onclick="window.pooshuAudio.switchTrack('mai')">
+        Maithili Song
+      </button>
+      <button type="button" class="audio-track-tab" id="track-as-btn" onclick="window.pooshuAudio.switchTrack('as')">
+        Assamese Song
+      </button>
+    </div>
+  </aside>
+
+  <!-- Hidden YouTube IFrame Container for Soundtrack -->
+  <div id="yt-audio-container"></div>
+
+  <!-- Application Scripts -->
+  <script src="flower_particles.js"></script>
+  <script src="soundscape.js"></script>
+  <script src="scratch.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>'''
+
+with open('public/index.html', 'w', encoding='utf-8') as f:
+    f.write(html_content)
+
+print('Updated public/index.html successfully!')

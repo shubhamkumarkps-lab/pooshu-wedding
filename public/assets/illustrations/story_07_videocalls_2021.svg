@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 320" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad_2021" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EDE7F6"/>
+      <stop offset="100%" stop-color="#D1C4E9"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="320" rx="16" fill="url(#bgGrad_2021)"/>
+  <rect x="12" y="12" width="376" height="296" rx="12" fill="none" stroke="#C8A253" stroke-width="1.5" stroke-dasharray="6, 4" opacity="0.6"/>
+  <rect x="25" y="22" width="65" height="26" rx="13" fill="#FFFFFF" stroke="#C8A253" stroke-width="1"/>
+  <text x="57" y="39" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" fill="#3D262A" text-anchor="middle">2021</text>
+  
+     <rect x="50" y="70" width="135" height="160" rx="8" fill="#FFFFFF" stroke="#9575CD" stroke-width="2.5"/>
+     <rect x="215" y="70" width="135" height="160" rx="8" fill="#FFFFFF" stroke="#9575CD" stroke-width="2.5"/>
+     <rect x="60" y="80" width="115" height="115" rx="6" fill="#263238"/>
+     <rect x="225" y="80" width="115" height="115" rx="6" fill="#263238"/>
+     <g transform="translate(118, 140)">
+       <circle cx="0" cy="0" r="18" fill="#FFDFC4"/>
+       <path d="M-18,-5 C-18,-20 18,-20 18,-5 Z" fill="#2C2C2C"/>
+       <circle cx="-5" cy="0" r="2" fill="#2C2C2C"/>
+       <circle cx="5" cy="0" r="2" fill="#2C2C2C"/>
+       <path d="M-3,7 Q0,11 3,7" stroke="#2C2C2C" stroke-width="1.5" fill="none"/>
+     </g>
+     <g transform="translate(282, 140)">
+       <circle cx="0" cy="0" r="18" fill="#FFDFC4"/>
+       <path d="M-18,-5 C-18,-20 18,-20 18,-5 Z" fill="#3E2723"/>
+       <circle cx="-5" cy="0" r="2" fill="#2C2C2C"/>
+       <circle cx="5" cy="0" r="2" fill="#2C2C2C"/>
+       <path d="M-3,7 Q0,11 3,7" stroke="#2C2C2C" stroke-width="1.5" fill="none"/>
+     </g>
+     <g fill="#E91E63">
+       <circle cx="200" cy="120" r="5"/>
+       <circle cx="200" cy="148" r="8"/>
+       <circle cx="200" cy="175" r="5"/>
+     </g>
+     <text x="200" y="260" font-size="12" font-family="sans-serif" fill="#5E35B1" text-anchor="middle">Distance Means So Little</text>
+     
+</svg>
