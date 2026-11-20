@@ -534,10 +534,18 @@ body {
 }
 
 .welcome-action-hint {
-  margin-top: 36px;
+  margin-top: 56px;
   text-align: center;
   color: #FFFDFB;
   animation: hintBreathe 2.4s infinite ease-in-out;
+  position: relative;
+  z-index: 25;
+}
+
+@media (max-width: 520px) {
+  .welcome-action-hint {
+    margin-top: 48px;
+  }
 }
 
 .hint-title {

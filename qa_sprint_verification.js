@@ -99,6 +99,33 @@ assert(styleCss.includes('left: 10px;') && styleCss.includes('right: 10px;'), 'M
 // Touch gesture checks
 assert(appJs.includes('touchstart') && appJs.includes('touchend'), 'Touch swipe gesture handling active on story card');
 
+// 5. Feedback Round Verification
+console.log('\n--- 5. Final Feedback Round Checks ---');
+// Gap between envelope graphic and button increased
+assert(styleCss.includes('.welcome-action-hint {\n  margin-top: 56px;') || styleCss.includes('margin-top: 56px;'), 'Gap between envelope graphic and Tap to Unveil button increased to 56px');
+
+// Audio silence guard on first page
+assert(soundscapeJs.includes('hasEnteredSite = false'), 'Strict silence on first page guarded by hasEnteredSite = false');
+assert(soundscapeJs.includes('if (!this.hasEnteredSite) return;'), 'startAmbientRaga guarded from playing on first page');
+
+// Favicon Wax Seal 1 check
+assert(fs.existsSync(path.join(__dirname, 'public/favicon.png')), 'favicon.png generated from Wax Seal 1');
+assert(fs.existsSync(path.join(__dirname, 'public/favicon-32.png')), 'favicon-32.png generated from Wax Seal 1');
+assert(indexHtml.includes('favicon.png') && indexHtml.includes('favicon-32.png'), 'index.html references Wax Seal 1 favicon');
+assert(adminHtml.includes('favicon.png') && adminHtml.includes('favicon-32.png'), 'admin.html references Wax Seal 1 favicon');
+
+// Test 3 RSVP check
+const rsvps = JSON.parse(fs.readFileSync(path.join(__dirname, 'rsvps.json'), 'utf8'));
+const test3 = rsvps.find(r => (r.name || r.fullname) === 'Test 3');
+assert(test3 !== undefined, 'RSVP Test 3 entry exists in rsvps.json');
+assert(test3 && test3.attending === 'yes', 'Test 3 attendance recorded');
+assert(test3 && (test3.guestCount == 2 || test3.guests == 2), 'Test 3 guest count recorded as 2');
+
+// Flexible admin authentication check
+const serverJs = fs.readFileSync(path.join(__dirname, 'server.js'), 'utf8');
+assert(serverJs.includes("allowedUsers = ['admin', 'pooshu', 'shubham']"), 'Server allows flexible admin usernames (admin, pooshu, shubham)');
+assert(serverJs.includes('toLowerCase() === expectedPass.toLowerCase()'), 'Server allows case-insensitive admin password match');
+
 // Summary
 console.log('\n====================================================');
 console.log(`TOTAL TESTS: ${passCount + failCount}`);

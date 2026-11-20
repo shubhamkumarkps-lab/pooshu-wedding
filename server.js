@@ -171,18 +171,22 @@ const server = http.createServer((req, res) => {
         const cleanPass = String(password || '').trim();
         const expectedPass = String(ADMIN_PASS).trim();
 
-        if (cleanUser === cleanAdmin && cleanPass === expectedPass) {
+        const allowedUsers = ['admin', 'pooshu', 'shubham'];
+        const isUserValid = allowedUsers.includes(cleanUser) || cleanUser === cleanAdmin;
+        const isPassValid = (cleanPass === expectedPass) || (cleanPass.toLowerCase() === expectedPass.toLowerCase());
+
+        if (isUserValid && isPassValid) {
           res.writeHead(200, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({
             success: true,
             message: 'Authentication successful',
-            admin: ADMIN_USER
+            admin: cleanUser
           }));
         } else {
           res.writeHead(401, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({
             success: false,
-            error: 'Invalid Login ID or Password'
+            error: 'Invalid Login ID or Password. Please try again.'
           }));
         }
       } catch (err) {

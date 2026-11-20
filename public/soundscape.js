@@ -13,6 +13,7 @@ class SoundscapeEngine {
     this.isMuted = false;
     this.isPlayingMusic = false;
     this.autoPlayOnReady = false;
+    this.hasEnteredSite = false; // Strictly enforces NO music on the first "Tap to Unveil" page
     this.ytPlayer = null;
     this.ytReady = false;
 
@@ -210,6 +211,7 @@ class SoundscapeEngine {
    * Ambient Indian Flute & Tanpura Drone (Fallback & Background)
    * ---------------------------------------------------- */
   startAmbientRaga() {
+    if (!this.hasEnteredSite) return; // Silent on first page
     this.ensureAudioContext();
     if (!this.ctx || this.isPlayingAmbient) return;
 
@@ -319,7 +321,7 @@ class SoundscapeEngine {
         events: {
           onReady: () => {
             console.log('YouTube Audio Player is ready.');
-            if (this.autoPlayOnReady) {
+            if (this.hasEnteredSite && this.autoPlayOnReady) {
               const activeTrack = this.tracks[this.currentTrack];
               const startSec = activeTrack.startSeconds || 0;
               if (this.ytPlayer && typeof this.ytPlayer.loadVideoById === 'function') {
@@ -366,18 +368,23 @@ class SoundscapeEngine {
             }
           },
           onError: () => {
-            console.warn('YouTube embed restricted; transitioning to ceremonial Web Audio raga fallback.');
-            this.startAmbientRaga();
+            console.warn('YouTube embed restricted fallback notice.');
+            if (this.hasEnteredSite) {
+              this.startAmbientRaga();
+            }
           }
         }
       });
     } catch (e) {
       console.warn('YouTube player initialization notice:', e);
-      this.startAmbientRaga();
+      if (this.hasEnteredSite) {
+        this.startAmbientRaga();
+      }
     }
   }
 
   togglePlay() {
+    if (!this.hasEnteredSite) return;
     this.ensureAudioContext();
 
     if (this.ytPlayer && typeof this.ytPlayer.getPlayerState === 'function') {
@@ -419,6 +426,7 @@ class SoundscapeEngine {
 
   // Start default song (Assamese "Indradhanu") when user enters the main website
   startDefaultTrack() {
+    this.hasEnteredSite = true; // Unlocks audio playback for the main website
     this.ensureAudioContext();
     this.currentTrack = 'as';
     this.autoPlayOnReady = true;
@@ -449,8 +457,15 @@ class SoundscapeEngine {
 
   switchTrack(trackKey) {
     if (!this.tracks[trackKey]) return;
-    this.ensureAudioContext();
     this.currentTrack = trackKey;
+
+    // If still on the first "Tap to Unveil" page, keep site silent until unveiled
+    if (!this.hasEnteredSite) {
+      this.updateUI();
+      return;
+    }
+
+    this.ensureAudioContext();
     this.autoPlayOnReady = true;
     const targetVideo = this.tracks[trackKey];
     const startSec = targetVideo.startSeconds || 0;

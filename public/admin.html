@@ -4,11 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>#pooshu RSVP Admin Console — Pooja & Shubham</title>
-  <link rel="icon" type="image/png" href="assets/pooshu_logo.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=2.3">
+  <link rel="icon" type="image/png" sizes="192x192" href="favicon.png?v=2.3">
+  <link rel="apple-touch-icon" href="favicon.png?v=2.3">
+  <link rel="shortcut icon" href="favicon.png?v=2.3">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2.3">
   <style>
     :root {
       --admin-bg: #FAF6F0;
@@ -685,11 +688,13 @@
 
       // Check existing session
       function checkAuth() {
-        if (sessionStorage.getItem(AUTH_KEY) === 'true') {
-          showDashboard();
-        } else {
-          showLogin();
-        }
+        try {
+          if (sessionStorage.getItem(AUTH_KEY) === 'true' || localStorage.getItem(AUTH_KEY) === 'true') {
+            showDashboard();
+            return;
+          }
+        } catch(e) {}
+        showLogin();
       }
 
       function showLogin() {
@@ -708,6 +713,13 @@
         e.preventDefault();
         const username = document.getElementById('login-username').value.trim();
         const password = document.getElementById('login-password').value.trim();
+        const submitBtn = loginForm.querySelector('.btn-login-submit');
+        const origText = submitBtn ? submitBtn.textContent : 'Authenticate Access';
+
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Authenticating...';
+        }
 
         try {
           const res = await fetch('/api/admin/login', {
@@ -719,7 +731,10 @@
           const result = await res.json();
 
           if (result.success) {
-            sessionStorage.setItem(AUTH_KEY, 'true');
+            try {
+              sessionStorage.setItem(AUTH_KEY, 'true');
+              localStorage.setItem(AUTH_KEY, 'true');
+            } catch(e) {}
             errorMsg.style.display = 'none';
             showDashboard();
           } else {
@@ -730,12 +745,20 @@
           console.error('Authentication request error:', err);
           errorMsg.textContent = 'Unable to reach authentication service. Please try again.';
           errorMsg.style.display = 'block';
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = origText;
+          }
         }
       });
 
       // Handle Logout
       logoutBtn.addEventListener('click', () => {
-        sessionStorage.removeItem(AUTH_KEY);
+        try {
+          sessionStorage.removeItem(AUTH_KEY);
+          localStorage.removeItem(AUTH_KEY);
+        } catch(e) {}
         showLogin();
       });
 
@@ -811,8 +834,8 @@
 
           // Search query
           if (query) {
-            const nameMatch = (item.name || '').toLowerCase().includes(query);
-            const songMatch = (item.djSong || '').toLowerCase().includes(query);
+            const nameMatch = (item.name || item.fullname || '').toLowerCase().includes(query);
+            const songMatch = (item.djSong || item.songRequest || '').toLowerCase().includes(query);
             const sideMatch = (item.side || '').toLowerCase().includes(query);
             return nameMatch || songMatch || sideMatch;
           }
@@ -856,13 +879,17 @@
             }
           }
 
+          const guestName = item.name || item.fullname || 'Honored Guest';
+          const guestSong = item.djSong || item.songRequest || '';
+          const guestNum = item.guestCount || item.guests || 1;
+
           tr.innerHTML = `
             <td style="font-weight: 700; color: #8C7578;">${idx + 1}</td>
-            <td style="font-weight: 600; color: #2D1016;">${item.name || 'Honored Guest'}</td>
+            <td style="font-weight: 600; color: #2D1016;">${guestName}</td>
             <td>${sideBadge}</td>
             <td>${attendBadge}</td>
-            <td><span class="guest-count-pill">${item.guestCount || item.guests || 1}</span></td>
-            <td><span class="song-pill">${item.djSong ? '🎵 ' + item.djSong : '—'}</span></td>
+            <td><span class="guest-count-pill">${guestNum}</span></td>
+            <td><span class="song-pill">${guestSong ? '🎵 ' + guestSong : '—'}</span></td>
             <td>${dateStr}</td>
           `;
 
