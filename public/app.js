@@ -727,47 +727,89 @@ END:VCALENDAR`;
     });
   }
 
-  handleRsvpSubmit() {
-    const name = document.getElementById('input-fullname')?.value || 'Honored Guest';
+  async handleRsvpSubmit() {
+    const name = (document.getElementById('input-fullname')?.value || '').trim() || 'Honored Guest';
     const side = document.getElementById('select-side')?.value || 'mutual';
     const attending = document.getElementById('rsvp-attending-val')?.value || 'yes';
     const guestCount = document.getElementById('input-guest-count')?.value || '1';
-    const djSong = document.getElementById('input-djsong')?.value || '';
+    const djSong = (document.getElementById('input-djsong')?.value || '').trim();
 
-    // Play ceremonial confirm chime
-    if (window.pooshuAudio) {
-      window.pooshuAudio.playRsvpConfirm();
-    }
-
-    // Release multiple bursts of celebration wedding flowers!
-    if (window.releaseFlowerBurst) {
-      window.releaseFlowerBurst(window.innerWidth / 2, window.innerHeight * 0.45, 35);
-      setTimeout(() => {
-        window.releaseFlowerBurst(window.innerWidth * 0.35, window.innerHeight * 0.55, 25);
-        window.releaseFlowerBurst(window.innerWidth * 0.65, window.innerHeight * 0.55, 25);
-      }, 250);
-    }
-
-    // Show celebration banner
     const banner = document.getElementById('rsvp-success-banner');
     const form = document.getElementById('wedding-rsvp-form');
     const msg = document.getElementById('rsvp-success-message');
+    const submitBtn = document.getElementById('btn-rsvp-submit');
+    const origBtnText = submitBtn ? submitBtn.textContent : 'Confirm Your RSVP';
 
-    if (banner) banner.classList.remove('hidden');
-    if (form) form.classList.add('hidden');
-    if (msg) {
-      msg.textContent = `Honored ${name}, your RSVP (${attending === 'yes' ? 'Joyfully Attending' : 'Regretfully Declining'} with ${guestCount} guest(s)) has been registered with love. We eagerly await celebrating #pooshu with you!`;
+    let errorEl = document.getElementById('rsvp-error-notice');
+    if (!errorEl && form) {
+      errorEl = document.createElement('p');
+      errorEl.id = 'rsvp-error-notice';
+      errorEl.style.cssText = 'color: #B71C1C; font-size: 0.9rem; font-weight: 600; margin-top: 12px; text-align: center; display: none;';
+      form.appendChild(errorEl);
+    }
+    if (errorEl) {
+      errorEl.style.display = 'none';
+      errorEl.textContent = '';
     }
 
-    // Post to server API
-    fetch('/api/rsvp', {
-      method: 'POST',
-      cache: 'no-store',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, side, attending, guestCount, djSong, timestamp: new Date().toISOString() })
-    }).then(res => res.json())
-      .then(data => console.log('[RSVP Success]:', data))
-      .catch(e => console.log('[RSVP Notice]:', e));
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Recording RSVP...';
+    }
+
+    const scriptUrl = window.POOSHU_CONFIG && window.POOSHU_CONFIG.SCRIPT_URL;
+    const endpoint = scriptUrl || '/api/rsvp';
+    const payload = { name, side, attending, guestCount, djSong, timestamp: new Date().toISOString() };
+
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        redirect: 'follow',
+        cache: 'no-store',
+        // text/plain avoids a CORS preflight OPTIONS request, which Google Apps Script does not handle
+        headers: {
+          'Content-Type': scriptUrl ? 'text/plain;charset=utf-8' : 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+      if (!res.ok || (data && data.success === false)) {
+        throw new Error((data && data.error) || `Request failed with status ${res.status}`);
+      }
+
+      console.log('[RSVP Success]:', data);
+
+      // Play ceremonial confirm chime
+      if (window.pooshuAudio) {
+        window.pooshuAudio.playRsvpConfirm();
+      }
+
+      // Release multiple bursts of celebration wedding flowers!
+      if (window.releaseFlowerBurst) {
+        window.releaseFlowerBurst(window.innerWidth / 2, window.innerHeight * 0.45, 35);
+        setTimeout(() => {
+          window.releaseFlowerBurst(window.innerWidth * 0.35, window.innerHeight * 0.55, 25);
+          window.releaseFlowerBurst(window.innerWidth * 0.65, window.innerHeight * 0.55, 25);
+        }, 250);
+      }
+
+      if (banner) banner.classList.remove('hidden');
+      if (form) form.classList.add('hidden');
+      if (msg) {
+        msg.textContent = `Honored ${name}, your RSVP (${attending === 'yes' ? 'Joyfully Attending' : 'Regretfully Declining'} with ${guestCount} guest(s)) has been registered with love. We eagerly await celebrating #pooshu with you!`;
+      }
+    } catch (err) {
+      console.error('[RSVP Error]:', err);
+      if (errorEl) {
+        errorEl.textContent = 'We could not save your RSVP right now. Please check your connection and try again.';
+        errorEl.style.display = 'block';
+      }
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = origBtnText;
+      }
+    }
   }
 }
 

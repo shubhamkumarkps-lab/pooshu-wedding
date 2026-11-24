@@ -533,21 +533,16 @@
 
       <form id="admin-login-form">
         <div class="login-input-group">
-          <label class="login-label" for="login-username">Admin User ID</label>
-          <input type="text" id="login-username" class="login-input" placeholder="Enter Login ID" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" required>
-        </div>
-
-        <div class="login-input-group">
-          <label class="login-label" for="login-password">Password</label>
-          <input type="password" id="login-password" class="login-input" placeholder="Enter Password" autocomplete="current-password" autocorrect="off" spellcheck="false" required>
+          <label class="login-label" for="login-password">Admin Secret Key</label>
+          <input type="password" id="login-password" class="login-input" placeholder="Enter Google Script ADMIN_KEY" autocomplete="current-password" autocorrect="off" spellcheck="false" required>
         </div>
 
         <button type="submit" class="btn-login-submit">Authenticate Access</button>
-        <div id="login-error-msg" class="login-error">Invalid Login ID or Password. Please try again.</div>
+        <div id="login-error-msg" class="login-error">Invalid password. Please try again.</div>
       </form>
 
       <div style="margin-top: 18px;">
-        <a href="/" style="color: var(--admin-gold); font-size: 0.82rem; text-decoration: none; font-weight: 600;">← Back to Wedding Invitation</a>
+        <a href="./" style="color: var(--admin-gold); font-size: 0.82rem; text-decoration: none; font-weight: 600;">← Back to Wedding Invitation</a>
       </div>
     </div>
   </div>
@@ -563,7 +558,8 @@
         <span>#POOSHU • RSVP Executive Management</span>
       </div>
       <div class="admin-nav-actions">
-        <a href="/" class="btn-admin-link">← Live Site</a>
+        <a href="https://docs.google.com/spreadsheets/d/1Z2sqhpoUzWrqTCRFdjrkUB-8YhqDdv9U1CgAYUVvt8Q/edit" target="_blank" rel="noopener noreferrer" class="btn-admin-link" id="btn-open-sheet">📊 Google Sheet</a>
+        <a href="./" class="btn-admin-link">← Live Site</a>
         <button type="button" class="btn-admin-logout" id="btn-admin-logout">Sign Out</button>
       </div>
     </header>
@@ -630,12 +626,12 @@
         </div>
 
         <div class="export-btn-group">
-          <a href="/api/rsvps/download-excel" class="btn-export-excel" id="btn-export-excel" download>
+          <button type="button" class="btn-export-excel" id="btn-export-excel">
             📊 Download Excel (.xlsx)
-          </a>
-          <a href="/api/rsvps/download-csv" class="btn-export-csv" id="btn-export-csv" download>
+          </button>
+          <button type="button" class="btn-export-csv" id="btn-export-csv">
             📄 Download CSV
-          </a>
+          </button>
           <button type="button" class="btn-refresh-data" id="btn-refresh-data">
             🔄 Refresh
           </button>
@@ -669,11 +665,13 @@
     </div>
   </div>
 
+  <script src="config.js"></script>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
   <script>
-    // Admin Console JavaScript Controller
+    // Admin Console JavaScript Controller (Google Apps Script Backend)
     (function () {
       let rsvpsData = [];
-      const AUTH_KEY = 'pooshu_admin_authenticated';
+      const ADMIN_KEY_STORAGE = 'pooshu_admin_key';
 
       const loginView = document.getElementById('admin-login-view');
       const dashboardView = document.getElementById('admin-dashboard-view');
@@ -681,19 +679,109 @@
       const errorMsg = document.getElementById('login-error-msg');
       const logoutBtn = document.getElementById('btn-admin-logout');
       const refreshBtn = document.getElementById('btn-refresh-data');
+      const exportExcelBtn = document.getElementById('btn-export-excel');
+      const exportCsvBtn = document.getElementById('btn-export-csv');
+      const openSheetBtn = document.getElementById('btn-open-sheet');
       const searchInput = document.getElementById('admin-search-input');
       const filterSelect = document.getElementById('admin-filter-select');
       const tableBody = document.getElementById('rsvps-table-body');
       const emptyNotice = document.getElementById('table-empty-notice');
 
+      const config = window.POOSHU_CONFIG || {};
+      const scriptUrl = config.SCRIPT_URL || '';
+      if (openSheetBtn && config.SHEET_URL) {
+        openSheetBtn.href = config.SHEET_URL;
+      }
+
+      function escapeHtml(val) {
+        return String(val == null ? '' : val)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function normalizeRsvpRow(row) {
+        if (!row || typeof row !== 'object') {
+          return { timestamp: '', name: 'Honored Guest', side: 'mutual', attending: 'yes', guestCount: 1, djSong: '' };
+        }
+        const byNormKey = {};
+        Object.keys(row).forEach((k) => {
+          const norm = String(k).toLowerCase().replace(/[^a-z0-9]/g, '');
+          byNormKey[norm] = row[k];
+        });
+
+        const pick = (candidates, fallback = '') => {
+          for (const key of candidates) {
+            if (byNormKey[key] !== undefined && byNormKey[key] !== null && byNormKey[key] !== '') {
+              return byNormKey[key];
+            }
+          }
+          return fallback;
+        };
+
+        const rawSide = String(pick(['side', 'affiliation', 'guestside', 'whoseside'], 'mutual')).trim().toLowerCase();
+        const side = rawSide.includes('bride') ? 'bride' : (rawSide.includes('groom') ? 'groom' : 'mutual');
+
+        const rawAttending = String(pick(['attending', 'status', 'attendancestatus', 'rsvp'], 'yes')).trim().toLowerCase();
+        const attending = (rawAttending === 'no' || rawAttending === 'declined' || rawAttending === 'false') ? 'no' : 'yes';
+
+        const parsedGuests = parseInt(pick(['guestcount', 'guests', 'numberofguests', 'count', 'headcount'], 1), 10);
+
+        return {
+          timestamp: pick(['timestamp', 'submittedat', 'createdat', 'date', 'time'], ''),
+          name: String(pick(['name', 'fullname', 'guestname', 'yourfullname'], 'Honored Guest')).trim(),
+          side,
+          attending,
+          guestCount: Number.isNaN(parsedGuests) ? 1 : parsedGuests,
+          djSong: String(pick(['djsong', 'songrequest', 'djsongrequest', 'song'], '')).trim()
+        };
+      }
+
+      function getStoredKey() {
+        try {
+          return sessionStorage.getItem(ADMIN_KEY_STORAGE) || '';
+        } catch (e) {
+          return '';
+        }
+      }
+
+      function setStoredKey(key) {
+        try {
+          if (key) sessionStorage.setItem(ADMIN_KEY_STORAGE, key);
+          else sessionStorage.removeItem(ADMIN_KEY_STORAGE);
+          // Clear legacy auth flags if present
+          sessionStorage.removeItem('pooshu_admin_authenticated');
+          localStorage.removeItem('pooshu_admin_authenticated');
+        } catch (e) {}
+      }
+
+      async function requestRsvpsFromScript(adminKey) {
+        if (!scriptUrl) {
+          throw new Error('Google Apps Script URL is not configured in config.js.');
+        }
+        const url = `${scriptUrl}?key=${encodeURIComponent(adminKey)}&_t=${Date.now()}`;
+        const res = await fetch(url, {
+          method: 'GET',
+          redirect: 'follow',
+          cache: 'no-store'
+        });
+        const data = await res.json();
+        if (!res.ok || !data || data.success === false) {
+          throw new Error((data && data.error) || 'Invalid password');
+        }
+        const rawList = Array.isArray(data.rsvps) ? data.rsvps : (Array.isArray(data) ? data : []);
+        return rawList.map(normalizeRsvpRow);
+      }
+
       // Check existing session
       function checkAuth() {
-        try {
-          if (sessionStorage.getItem(AUTH_KEY) === 'true' || localStorage.getItem(AUTH_KEY) === 'true') {
-            showDashboard();
-            return;
-          }
-        } catch(e) {}
+        const savedKey = getStoredKey();
+        if (savedKey) {
+          showDashboard(true);
+          return;
+        }
         showLogin();
       }
 
@@ -702,16 +790,20 @@
         dashboardView.style.display = 'none';
       }
 
-      function showDashboard() {
+      function showDashboard(shouldFetch = false) {
         loginView.style.display = 'none';
         dashboardView.style.display = 'block';
-        fetchRsvps();
+        if (shouldFetch) {
+          fetchRsvps();
+        } else {
+          renderStats(rsvpsData);
+          renderTable();
+        }
       }
 
       // Handle Login
       loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const username = document.getElementById('login-username').value.trim();
         const password = document.getElementById('login-password').value.trim();
         const submitBtn = loginForm.querySelector('.btn-login-submit');
         const origText = submitBtn ? submitBtn.textContent : 'Authenticate Access';
@@ -722,28 +814,15 @@
         }
 
         try {
-          const res = await fetch('/api/admin/login', {
-            method: 'POST',
-            cache: 'no-store',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
-          });
-          const result = await res.json();
-
-          if (result.success) {
-            try {
-              sessionStorage.setItem(AUTH_KEY, 'true');
-              localStorage.setItem(AUTH_KEY, 'true');
-            } catch(e) {}
-            errorMsg.style.display = 'none';
-            showDashboard();
-          } else {
-            errorMsg.textContent = result.error || 'Invalid credentials. Please try again.';
-            errorMsg.style.display = 'block';
-          }
+          const rows = await requestRsvpsFromScript(password);
+          setStoredKey(password);
+          rsvpsData = rows;
+          errorMsg.style.display = 'none';
+          showDashboard(false);
         } catch (err) {
           console.error('Authentication request error:', err);
-          errorMsg.textContent = 'Unable to reach authentication service. Please try again.';
+          setStoredKey('');
+          errorMsg.textContent = err.message || 'Invalid password. Please try again.';
           errorMsg.style.display = 'block';
         } finally {
           if (submitBtn) {
@@ -755,26 +834,29 @@
 
       // Handle Logout
       logoutBtn.addEventListener('click', () => {
-        try {
-          sessionStorage.removeItem(AUTH_KEY);
-          localStorage.removeItem(AUTH_KEY);
-        } catch(e) {}
+        setStoredKey('');
+        rsvpsData = [];
+        document.getElementById('login-password').value = '';
         showLogin();
       });
 
       // Fetch RSVPs with cache-busting
       async function fetchRsvps() {
+        const adminKey = getStoredKey();
+        if (!adminKey) {
+          showLogin();
+          return;
+        }
         try {
-          const res = await fetch('/api/rsvps?_t=' + Date.now(), {
-            cache: 'no-store',
-            headers: { 'Cache-Control': 'no-cache' }
-          });
-          const data = await res.json();
-          rsvpsData = Array.isArray(data) ? data : [];
+          rsvpsData = await requestRsvpsFromScript(adminKey);
           renderStats(rsvpsData);
           renderTable();
         } catch (e) {
           console.error('Failed to load RSVPs:', e);
+          setStoredKey('');
+          errorMsg.textContent = e.message || 'Session expired. Please sign in again.';
+          errorMsg.style.display = 'block';
+          showLogin();
         }
       }
 
@@ -784,6 +866,55 @@
           setTimeout(() => { refreshBtn.textContent = '🔄 Refresh'; }, 400);
         });
       });
+
+      function buildExportRows(list) {
+        return list.map((item, idx) => ({
+          '#': idx + 1,
+          'Guest Full Name': item.name || 'Honored Guest',
+          'Side': item.side === 'bride' ? "Bride's Guest (Pooja)" : (item.side === 'groom' ? "Groom's Guest (Shubham)" : 'Mutual / Friends of Both'),
+          'Attendance Status': item.attending === 'no' ? 'Regretfully Decline' : 'Joyfully Accept',
+          'Guests': item.guestCount || 1,
+          'DJ Song Request': item.djSong || '',
+          'Submitted At': item.timestamp ? String(item.timestamp) : ''
+        }));
+      }
+
+      function triggerCsvDownload() {
+        const rows = buildExportRows(rsvpsData);
+        const headers = ['#', 'Guest Full Name', 'Side', 'Attendance Status', 'Guests', 'DJ Song Request', 'Submitted At'];
+        const csvEscape = (v) => `"${String(v == null ? '' : v).replace(/"/g, '""')}"`;
+        const lines = [headers.map(csvEscape).join(',')];
+        rows.forEach((r) => {
+          lines.push(headers.map((h) => csvEscape(r[h])).join(','));
+        });
+        const blob = new Blob(['\uFEFF' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'pooshu_wedding_rsvps.csv';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      if (exportCsvBtn) {
+        exportCsvBtn.addEventListener('click', triggerCsvDownload);
+      }
+
+      if (exportExcelBtn) {
+        exportExcelBtn.addEventListener('click', () => {
+          const rows = buildExportRows(rsvpsData);
+          if (window.XLSX && window.XLSX.utils) {
+            const ws = window.XLSX.utils.json_to_sheet(rows);
+            const wb = window.XLSX.utils.book_new();
+            window.XLSX.utils.book_append_sheet(wb, ws, 'PooShu RSVPs');
+            window.XLSX.writeFile(wb, 'pooshu_wedding_rsvps.xlsx');
+          } else {
+            triggerCsvDownload();
+          }
+        });
+      }
 
       // Calculate and Render Metrics
       function renderStats(list) {
@@ -799,7 +930,7 @@
           const isAttending = item.attending !== 'no';
           if (isAttending) {
             attending++;
-            totalGuests += parseInt(item.guestCount || item.guests, 10) || 1;
+            totalGuests += parseInt(item.guestCount, 10) || 1;
           } else {
             declined++;
           }
@@ -834,8 +965,8 @@
 
           // Search query
           if (query) {
-            const nameMatch = (item.name || item.fullname || '').toLowerCase().includes(query);
-            const songMatch = (item.djSong || item.songRequest || '').toLowerCase().includes(query);
+            const nameMatch = (item.name || '').toLowerCase().includes(query);
+            const songMatch = (item.djSong || '').toLowerCase().includes(query);
             const sideMatch = (item.side || '').toLowerCase().includes(query);
             return nameMatch || songMatch || sideMatch;
           }
@@ -873,15 +1004,19 @@
           if (item.timestamp) {
             try {
               const d = new Date(item.timestamp);
-              dateStr = `${d.toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })} <span class="date-subtext">${d.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}</span>`;
+              if (!Number.isNaN(d.getTime())) {
+                dateStr = `${d.toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })} <span class="date-subtext">${d.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}</span>`;
+              } else {
+                dateStr = escapeHtml(item.timestamp);
+              }
             } catch (e) {
-              dateStr = item.timestamp;
+              dateStr = escapeHtml(item.timestamp);
             }
           }
 
-          const guestName = item.name || item.fullname || 'Honored Guest';
-          const guestSong = item.djSong || item.songRequest || '';
-          const guestNum = item.guestCount || item.guests || 1;
+          const guestName = escapeHtml(item.name || 'Honored Guest');
+          const guestSong = escapeHtml(item.djSong || '');
+          const guestNum = escapeHtml(item.guestCount || 1);
 
           tr.innerHTML = `
             <td style="font-weight: 700; color: #8C7578;">${idx + 1}</td>
