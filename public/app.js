@@ -291,9 +291,12 @@ class PooshuApp {
         window.releaseFlowerBurst(centerX, centerY, 16);
       }
 
-      // Unlock WebAudio on tap gesture and play wax fracture SFX
+      // Unlock WebAudio & HTML5 Audio on tap gesture and play wax fracture SFX
       if (window.pooshuAudio) {
         window.pooshuAudio.ensureAudioContext();
+        if (typeof window.pooshuAudio.unlockHtmlAudio === 'function') {
+          window.pooshuAudio.unlockHtmlAudio();
+        }
         window.pooshuAudio.playSealBreak();
       }
 
