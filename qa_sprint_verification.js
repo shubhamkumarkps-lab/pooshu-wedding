@@ -45,7 +45,7 @@ const appJs = fs.readFileSync(path.join(__dirname, 'public/app.js'), 'utf8');
 const soundscapeJs = fs.readFileSync(path.join(__dirname, 'public/soundscape.js'), 'utf8');
 
 // Check envelope open is silent
-const triggerOpenBlock = appJs.substring(appJs.indexOf('const triggerOpen = () => {'), appJs.indexOf('const startHolding = (e) => {'));
+const triggerOpenBlock = appJs.substring(appJs.indexOf('const triggerOpen = () => {'), appJs.indexOf('const handleTap = (e) => {'));
 assert(!triggerOpenBlock.includes('togglePlay()'), 'Envelope opening flap does not autoplay music (silent invitation flow)');
 assert(triggerOpenBlock.includes('playSealBreak()'), 'Wax fracture SFX plays on seal fracture');
 

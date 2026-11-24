@@ -1,7 +1,7 @@
 /**
  * #pooshu Interactive Wedding Web Application v3.0
  * Responsive Full Webpage & Phone Architecture
- * Flower-Based Hold-to-Open Wax Seal with Radial Petal Bloom
+ * Flower-Based Tap-to-Open Wax Seal with Radial Petal Bloom
  * Trilingual Navigation: The Wedding, Know the Bride, Know the Groom, Our Story, Events, RSVP
  * Interactive Flower Click Particle Engine
  */
@@ -16,10 +16,8 @@ class PooshuApp {
     this.weddingDate = new Date('2026-12-02T20:00:00+05:30'); // Dec 2, 2026, 8 PM IST
     this.countdownInterval = null;
 
-    // Hold-to-open state
-    this.holdTimer = null;
+    // Envelope unveil state
     this.isOpened = false;
-    this.isHolding = false;
 
     this.init();
   }
@@ -28,7 +26,7 @@ class PooshuApp {
     await this.loadTranslations();
     this.setupNavigation();
     this.setupLanguageSwitcher();
-    this.setup3DEnvelopeHoldToOpen();
+    this.setup3DEnvelopeTapToOpen();
     this.setupStoryCarousel();
     this.setupStoryThumbnails();
     this.setupEventFilters();
@@ -148,7 +146,7 @@ class PooshuApp {
 
     // Welcome Screen
     this.setText('env-instruction', t.envelope.instruction);
-    this.setText('unveil-btn-text', t.envelope.tapHoldBtn || t.envelope.instruction || 'Tap & Hold to Unveil');
+    this.setText('unveil-btn-text', t.envelope.tapHoldBtn || t.envelope.instruction || 'Tap to Unveil');
 
     // Hero Section
     this.setText('hero-invocation', t.hero.invocation);
@@ -257,11 +255,10 @@ class PooshuApp {
   }
 
   /* ----------------------------------------------------
-   * 3. 3D Floating Envelope with Flower-Based Hold-To-Open
+   * 3. 3D Floating Envelope with Tap-To-Open Wax Seal
    * ---------------------------------------------------- */
-  setup3DEnvelopeHoldToOpen() {
+  setup3DEnvelopeTapToOpen() {
     const sealBtn = document.getElementById('wax-seal-btn');
-    const sealDisc = document.getElementById('wax-seal-disc');
     const aestheticBtn = document.getElementById('btn-tap-hold-unveil');
     const progressTrack = document.getElementById('seal-flower-progress');
     const statusText = document.getElementById('flower-status-text');
@@ -271,14 +268,9 @@ class PooshuApp {
 
     if (!sealBtn || !scene || !overlay) return;
 
-    const circumference = 314; // 2 * PI * 50
-    const holdDuration = 600; // ms for satisfying hold feeling
-
     const triggerOpen = () => {
       if (this.isOpened) return;
       this.isOpened = true;
-      this.isHolding = false;
-      clearInterval(this.holdTimer);
 
       if (aestheticBtn) {
         aestheticBtn.style.opacity = '0';
@@ -299,8 +291,9 @@ class PooshuApp {
         window.releaseFlowerBurst(centerX, centerY, 16);
       }
 
-      // Play wax fracture SFX
+      // Unlock WebAudio on tap gesture and play wax fracture SFX
       if (window.pooshuAudio) {
+        window.pooshuAudio.ensureAudioContext();
         window.pooshuAudio.playSealBreak();
       }
 
@@ -321,103 +314,22 @@ class PooshuApp {
       }, 3500);
     };
 
-    const startHolding = (e) => {
-      if (this.isOpened) return;
-      if (e && e.cancelable) {
-        e.preventDefault();
-      }
-
-      this.isHolding = true;
-      if (sealDisc) sealDisc.classList.add('pressing');
-      if (aestheticBtn) aestheticBtn.classList.add('pressing');
-      if (window.pooshuAudio) window.pooshuAudio.ensureAudioContext();
-
-      const startTime = Date.now();
-      clearInterval(this.holdTimer);
-
-      const bloomingLabel = this.i18nData[this.currentLang]?.envelope?.blooming || 'Blooming...';
-
-      this.holdTimer = setInterval(() => {
-        if (!this.isHolding) {
-          clearInterval(this.holdTimer);
-          return;
-        }
-
-        const elapsed = Date.now() - startTime;
-        const progress = Math.min(1, elapsed / holdDuration);
-
-        // Update progress circular ring
-        if (progressTrack) {
-          const offset = circumference - (progress * circumference);
-          progressTrack.style.strokeDashoffset = offset;
-        }
-
-        // Incrementally bloom the 12 petals around the ring
-        const bloomedCount = Math.floor(progress * 12);
-        petals.forEach((p, idx) => {
-          if (idx <= bloomedCount) {
-            p.classList.add('bloomed');
-          } else {
-            p.classList.remove('bloomed');
-          }
-        });
-
-        // Update micro-status text with percentage
-        if (statusText) {
-          const pct = Math.min(100, Math.round(progress * 100));
-          statusText.textContent = `${bloomingLabel} ${pct}%`;
-        }
-
-        if (progress >= 1) {
-          clearInterval(this.holdTimer);
-          triggerOpen();
-        }
-      }, 16);
-    };
-
-    const stopHolding = () => {
-      if (this.isOpened) return;
-      this.isHolding = false;
-      clearInterval(this.holdTimer);
-
-      if (sealDisc) sealDisc.classList.remove('pressing');
-      if (aestheticBtn) aestheticBtn.classList.remove('pressing');
-      if (progressTrack) progressTrack.style.strokeDashoffset = circumference;
-      petals.forEach(p => p.classList.remove('bloomed'));
-
-      const defaultText = this.i18nData[this.currentLang]?.envelope?.instruction || 'Press & Hold to Unveil';
-      if (statusText) statusText.textContent = defaultText;
-    };
-
-    // Cross-platform pointer & touch bindings on the wax seal button
-    sealBtn.addEventListener('pointerdown', startHolding);
-    sealBtn.addEventListener('touchstart', startHolding, { passive: false });
-    sealBtn.addEventListener('mousedown', startHolding);
-
-    // Cross-platform pointer & touch bindings on the aesthetic button below
-    if (aestheticBtn) {
-      aestheticBtn.addEventListener('pointerdown', startHolding);
-      aestheticBtn.addEventListener('touchstart', startHolding, { passive: false });
-      aestheticBtn.addEventListener('mousedown', startHolding);
-      aestheticBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        if (!this.isOpened) triggerOpen();
-      });
-    }
-
-    window.addEventListener('pointerup', stopHolding);
-    window.addEventListener('pointercancel', stopHolding);
-    window.addEventListener('touchend', stopHolding);
-    window.addEventListener('touchcancel', stopHolding);
-    window.addEventListener('mouseup', stopHolding);
-
-    // Click handler on seal button
-    sealBtn.addEventListener('click', (e) => {
+    const handleTap = (e) => {
       e.preventDefault();
-      if (!this.isOpened) {
+      triggerOpen();
+    };
+
+    sealBtn.addEventListener('click', handleTap);
+    sealBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
         triggerOpen();
       }
     });
+
+    if (aestheticBtn) {
+      aestheticBtn.addEventListener('click', handleTap);
+    }
   }
 
   enterMainSite() {

@@ -8,12 +8,12 @@
   },
   "envelope": {
     "monogram": "P & S",
-    "instruction": "Press & Hold to Unveil",
+    "instruction": "Tap to Unveil",
     "tapToOpen": "OPEN INVITATION",
     "blessing": "Shree Ganeshay Namah",
     "blooming": "Blooming...",
     "unveiled": "Unveiled!",
-    "tapHoldBtn": "Tap & Hold to Unveil"
+    "tapHoldBtn": "Tap to Unveil"
   },
   "hero": {
     "invocation": "Om Sri Ganeshaya Namah • With joyful hearts and the blessings of our parents",
