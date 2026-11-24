@@ -1,0 +1,12 @@
+node_modules
+.git
+.DS_Store
+*.log
+/New Assets
+/illustrations_flat
+/scripts
+/*.jpg
+/*.png
+/supabase_schema.sql
+/render.yaml
+/qa_*.js

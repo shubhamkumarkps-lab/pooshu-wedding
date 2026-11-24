@@ -121,10 +121,12 @@ assert(test3 !== undefined, 'RSVP Test 3 entry exists in rsvps.json');
 assert(test3 && test3.attending === 'yes', 'Test 3 attendance recorded');
 assert(test3 && (test3.guestCount == 2 || test3.guests == 2), 'Test 3 guest count recorded as 2');
 
-// Flexible admin authentication check
+// Flexible admin authentication check (delegated from server.js & api/ to lib/handlers.js)
 const serverJs = fs.readFileSync(path.join(__dirname, 'server.js'), 'utf8');
-assert(serverJs.includes("allowedUsers = ['admin', 'pooshu', 'shubham']"), 'Server allows flexible admin usernames (admin, pooshu, shubham)');
-assert(serverJs.includes('toLowerCase() === expectedPass.toLowerCase()'), 'Server allows case-insensitive admin password match');
+const handlersJs = fs.readFileSync(path.join(__dirname, 'lib/handlers.js'), 'utf8');
+assert(serverJs.includes("require('./lib/handlers')"), 'server.js delegates API handling to shared lib/handlers.js');
+assert(handlersJs.includes("allowedUsers = ['admin', 'pooshu', 'shubham']"), 'Handlers allow flexible admin usernames (admin, pooshu, shubham)');
+assert(handlersJs.includes('toLowerCase() === expectedPass.toLowerCase()'), 'Handlers allow case-insensitive admin password match');
 
 // Summary
 console.log('\n====================================================');
